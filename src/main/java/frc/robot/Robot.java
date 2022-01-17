@@ -4,9 +4,21 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.motorcontrol.MotorController;
+import edu.wpi.first.wpilibj.motorcontrol.PWMTalonFX;
+import edu.wpi.first.wpilibj.motorcontrol.PWMVictorSPX;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.TankDriveCommand;
+import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.TankDriveSubsystem;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -18,6 +30,30 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
+
+  /********************************************
+   * Tank Drive Controls
+   */
+  // Controls Left Wheels
+  private Joystick joystick00 = new Joystick(0);
+
+  // Controls Right Wheels
+  // private Joystick joystick01 = new Joystick(1);
+
+  // Controls for Alternate 
+  // private Joystick joystick02 = new Joystick(2);
+
+  private JoystickButton driveButton = new JoystickButton(joystick00, 1);
+
+  /*********************************************
+   * XBox Controller
+   */
+  // private XboxController xboxController = new XboxController(0);
+
+  /**********************************************
+   * PS4 Controller
+   */
+  // private PS4Controller ps4Controller = new PS4Controller(0);
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -77,11 +113,14 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+
   }
 
   /** This function is called periodically during operator control. */
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+    driveButton.whenPressed(new TankDriveCommand(new TankDriveSubsystem()));
+  }
 
   @Override
   public void testInit() {
@@ -92,4 +131,12 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during test mode. */
   @Override
   public void testPeriodic() {}
+
+  @Override
+  public void simulationInit() {
+  }
+  
+  @Override
+  public void simulationPeriodic() { 
+  }
 }

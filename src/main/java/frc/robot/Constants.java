@@ -12,4 +12,56 @@ package frc.robot;
  * <p>It is advised to statically import this class (or one of its inner classes) wherever the
  * constants are needed, to reduce verbosity.
  */
-public final class Constants {}
+public final class Constants {
+    /*************************************
+     * General Robot Constants
+     */
+    public final static double driveGearRatio = 7.29;   // 7.29:1 gearing reduction.
+    public final static double movementOfInertia = 7.5; // MOI of 7.5 kg m^2 (from CAD model).
+    public final static double massOfRobot = 60.0;      // The mass of the robot is 60 kg.
+    public final static double wheelRadius = 4;         // The robot uses 4" radius wheels.
+    public final static double trackWidth = 28;         // The track width is 0.7112 meters.
+
+    /*************************************
+     * Drive Train Motor Controller ports
+     */
+    public final static int motorControllerPort00 = 0;
+    public final static int motorControllerPort01 = 1;
+    public final static int motorControllerPort02 = 2;
+    public final static int motorControllerPort03 = 3;
+
+    /********************************************
+     * Drive Train Encoder Channels
+     */
+    public final static int encoder00ChannelA = 0;
+    public final static int encoder00ChannelB = 1;
+    public final static int encoder01ChannelA = 2;
+    public final static int encoder01ChannelB = 3;
+    public final static int encoder02ChannelA = 4;
+    public final static int encoder02ChannelB = 5;
+    public final static int encoder03ChannelA = 6;
+    public final static int encoder03ChannelB = 7;
+
+    public final static double encoder00PPR = 740;
+    public final static double encoder01PPR = 740;
+    public final static double encoder02PPR = 740;
+    public final static double encoder03PPR = 740;
+
+    /*********************************************
+     * Other Encoder
+     */
+    public final static int encoder04ChannelA = 8;
+    public final static int encoder04ChannelB = 9;
+
+    /**********************************************
+     * Gyroscopes
+     */
+
+    // This one is on analog ports.
+    public final static int gyro00Port00 = 0;
+
+    /**********************************************
+     * Simulation Variables
+     */
+    public final static int driveTrainNeosPerSide = 2;
+}
