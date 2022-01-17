@@ -5,10 +5,14 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.TankDriveCommand;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.TankDriveSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -22,6 +26,34 @@ public class RobotContainer {
 
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
+  private final TankDriveSubsystem tankDriveSubsystem = new TankDriveSubsystem();
+  private final TankDriveCommand tankDriveCommand = new TankDriveCommand(tankDriveSubsystem);
+
+  /********************************************
+   * Tank Drive Controls
+   */
+  // Controls Left Wheels
+  private Joystick joystick00 = new Joystick(0);
+
+  // Controls Right Wheels
+  // private Joystick joystick01 = new Joystick(1);
+
+  // Controls for Alternate 
+  // private Joystick joystick02 = new Joystick(2);
+
+  private JoystickButton driveButton = new JoystickButton(joystick00, 1);
+
+  /*********************************************
+   * XBox Controller
+   */
+  // private XboxController xboxController = new XboxController(0);
+
+  /**********************************************
+   * PS4 Controller
+   */
+  // private PS4Controller ps4Controller = new PS4Controller(0);
+
+
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
@@ -34,7 +66,9 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
-  private void configureButtonBindings() {}
+  private void configureButtonBindings() {
+    driveButton.whenPressed(tankDriveCommand);
+  }
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.

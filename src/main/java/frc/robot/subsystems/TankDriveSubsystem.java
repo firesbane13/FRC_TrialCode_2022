@@ -26,24 +26,18 @@ public class TankDriveSubsystem extends SubsystemBase {
      * of the robot.   THe MotorControllerGroups below group the motor controllers
      * for each side together.
      */
+    
     private MotorController motorController00 = new PWMSparkMax(Constants.motorControllerPort00);
     private MotorController motorController01 = new PWMSparkMax(Constants.motorControllerPort01);
-    private MotorController motorController02 = new PWMSparkMax(Constants.motorControllerPort02);
-    private MotorController motorController03 = new PWMSparkMax(Constants.motorControllerPort03);
+    
+    private MotorControllerGroup leftMotors = new MotorControllerGroup(
+        this.motorController00
+    );
 
-    private MotorController[] leftMotorControllers = {
-      this.motorController00,
-      this.motorController01
-    };
-
-    private MotorController[] rightMotorControllers = {
-      this.motorController02,
-      this.motorController03
-    };
-
-    private MotorControllerGroup leftMotors = new MotorControllerGroup(this.leftMotorControllers);
-
-    private MotorControllerGroup rightMotors = new MotorControllerGroup(this.rightMotorControllers);
+    private MotorControllerGroup rightMotors = new MotorControllerGroup(
+        this.motorController01
+    );
+    
 
     /************************************************
      * Drive Train Encoders
@@ -53,6 +47,7 @@ public class TankDriveSubsystem extends SubsystemBase {
      * See https://docs.wpilib.org/en/stable/docs/hardware/sensors/encoders-hardware.html
      * for explanation.
      */
+    
     private Encoder encoder00 = new Encoder(
         Constants.encoder00ChannelA, 
         Constants.encoder00ChannelB
@@ -61,26 +56,18 @@ public class TankDriveSubsystem extends SubsystemBase {
         Constants.encoder01ChannelA, 
         Constants.encoder01ChannelB
     );
-    private Encoder encoder02 = new Encoder(
-        Constants.encoder02ChannelA, 
-        Constants.encoder02ChannelB
-    );
-    private Encoder encoder03 = new Encoder(
-        Constants.encoder03ChannelA, 
-        Constants.encoder03ChannelB
-    );
 
+    
     private EncoderSim encoderSim00 = new EncoderSim(this.encoder00);
     private EncoderSim encoderSim01 = new EncoderSim(this.encoder01);
-    private EncoderSim encoderSim02 = new EncoderSim(this.encoder02);
-    private EncoderSim encoderSim03 = new EncoderSim(this.encoder03);
 
+    
     // Mostly used for simulation
     private AnalogGyro gyro00 = new AnalogGyro(Constants.gyro00Port00);
     
     private AnalogGyroSim gyroSim00 = new AnalogGyroSim(this.gyro00);
 
-
+    
     // Create the simulation model of our drivetrain.
     DifferentialDrivetrainSim m_driveSim = new DifferentialDrivetrainSim(
         DCMotor.getNEO(Constants.driveTrainNeosPerSide),    // 2 NEO motors on each side of the drivetrain.
@@ -94,19 +81,18 @@ public class TankDriveSubsystem extends SubsystemBase {
         // x and y:          0.001 m
         // heading:          0.001 rad
         // l and r velocity: 0.1   m/s
-        // l and r position: 0.005 m
+        // l and r pzzosition: 0.005 m
         VecBuilder.fill(0.001, 0.001, 0.001, 0.1, 0.1, 0.005, 0.005));
-
+    
     /** Creates a new TankDriveSubsystem Object */
     public TankDriveSubsystem() {
         System.out.println("TankDriveSubsystm Constructor");
 
         double wheelCircumference = ((2 * Math.PI) * Constants.wheelRadius);
-
+        /*
         encoder00.setDistancePerPulse(wheelCircumference / Constants.encoder00PPR);
-        encoder01.setDistancePerPulse(wheelCircumference / Constants.encoder01PPR);
-        encoder02.setDistancePerPulse(wheelCircumference / Constants.encoder02PPR);
-        encoder03.setDistancePerPulse(wheelCircumference / Constants.encoder03PPR);
+        encoder01.setDistancePerPulse(wheelCircumference / Constants.encoder00PPR);
+        */
     }
 
     public void drive() {
@@ -116,12 +102,13 @@ public class TankDriveSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        System.out.println("TankDriveSubsystm periodic");
+        // System.out.println("TankDriveSubsystm periodic");
     }
 
     @Override
     public void simulationPeriodic() {
-        System.out.println("TankDriveSubsystm simulationPeriodic");
+        // System.out.println("TankDriveSubsystm simulationPeriodic");
+        
         // Set the inputs to the system. Note that we need to convert
         // the [-1, 1] PWM signal to voltage by multiplying it by the
         // robot controller voltage.
@@ -138,10 +125,7 @@ public class TankDriveSubsystem extends SubsystemBase {
         encoderSim00.setRate(m_driveSim.getLeftVelocityMetersPerSecond());
         encoderSim01.setDistance(m_driveSim.getLeftPositionMeters());
         encoderSim01.setRate(m_driveSim.getLeftVelocityMetersPerSecond());
-        encoderSim02.setDistance(m_driveSim.getRightPositionMeters());
-        encoderSim02.setRate(m_driveSim.getRightVelocityMetersPerSecond());
-        encoderSim03.setDistance(m_driveSim.getRightPositionMeters());
-        encoderSim03.setRate(m_driveSim.getRightVelocityMetersPerSecond());
         gyroSim00.setAngle(-m_driveSim.getHeading().getDegrees());
+        
     }
 }

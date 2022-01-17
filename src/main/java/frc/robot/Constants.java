@@ -27,8 +27,6 @@ public final class Constants {
      */
     public final static int motorControllerPort00 = 0;
     public final static int motorControllerPort01 = 1;
-    public final static int motorControllerPort02 = 2;
-    public final static int motorControllerPort03 = 3;
 
     /********************************************
      * Drive Train Encoder Channels
@@ -37,21 +35,8 @@ public final class Constants {
     public final static int encoder00ChannelB = 1;
     public final static int encoder01ChannelA = 2;
     public final static int encoder01ChannelB = 3;
-    public final static int encoder02ChannelA = 4;
-    public final static int encoder02ChannelB = 5;
-    public final static int encoder03ChannelA = 6;
-    public final static int encoder03ChannelB = 7;
 
     public final static double encoder00PPR = 740;
-    public final static double encoder01PPR = 740;
-    public final static double encoder02PPR = 740;
-    public final static double encoder03PPR = 740;
-
-    /*********************************************
-     * Other Encoder
-     */
-    public final static int encoder04ChannelA = 8;
-    public final static int encoder04ChannelB = 9;
 
     /**********************************************
      * Gyroscopes

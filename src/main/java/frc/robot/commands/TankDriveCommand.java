@@ -44,6 +44,10 @@ public class TankDriveCommand extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return false;
+        /**
+         * If this is true the command runs once.   If it's false the command
+         * is continuous
+         */
+        return true;
     }
 }
