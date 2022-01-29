@@ -8,9 +8,9 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.ExampleCommand;
-import frc.robot.commands.TankDriveCommand;
+import frc.robot.commands.DriveTrainCommand;
 import frc.robot.subsystems.ExampleSubsystem;
-import frc.robot.subsystems.TankDriveSubsystem;
+import frc.robot.subsystems.DriveTrainSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
@@ -26,14 +26,14 @@ public class RobotContainer {
 
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
-  private final TankDriveSubsystem tankDriveSubsystem = new TankDriveSubsystem();
-  private final TankDriveCommand tankDriveCommand = new TankDriveCommand(tankDriveSubsystem);
+  private final DriveTrainSubsystem driveSubsystem = new DriveTrainSubsystem();
+  private final DriveTrainCommand driveCommand = new DriveTrainCommand(driveSubsystem);
 
   /********************************************
    * Tank Drive Controls
    */
   // Controls Left Wheels
-  private Joystick joystick00 = new Joystick(0);
+  public Joystick joystick00 = new Joystick(0);
 
   // Controls Right Wheels
   // private Joystick joystick01 = new Joystick(1);

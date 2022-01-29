@@ -1,26 +1,30 @@
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.TankDriveSubsystem;
+import frc.robot.Robot;
+import frc.robot.subsystems.DriveTrainSubsystem;
 
-public class TankDriveCommand extends CommandBase {
+public class DriveTrainCommand extends CommandBase {
     @SuppressWarnings( {
         "PMD.UnusedPrivateField",
         "PWD.SingularField"
     } )
 
-    private final TankDriveSubsystem tankDriveSubsystem;
+    private final DriveTrainSubsystem driveTrainSubsystem;
+    private Joystick leftJoystick = Robot.m_robotContainer.joystick00;
+
 
     /**
-     * Creates a new TankDriveCommand.
+     * Creates a new DriveTrainCommand.
      * 
      * @param subsystem The subsystem used by this command.
      */
-    public TankDriveCommand(TankDriveSubsystem subsystem) {
-        this.tankDriveSubsystem = subsystem;
+    public DriveTrainCommand(DriveTrainSubsystem subsystem) {
+        this.driveTrainSubsystem = subsystem;
 
         // Use addRequirements() here to declare subsystem dependcies.
-        addRequirements(this.tankDriveSubsystem);
+        addRequirements(this.driveTrainSubsystem);
     }
 
     // Called when the command is initially scheduled.
@@ -32,7 +36,7 @@ public class TankDriveCommand extends CommandBase {
     // Call every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        tankDriveSubsystem.drive();
+        driveTrainSubsystem.drive();
     }
 
     // Called once the command ends or is interrupted.

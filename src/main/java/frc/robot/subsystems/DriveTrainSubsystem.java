@@ -15,7 +15,10 @@ import edu.wpi.first.wpilibj.simulation.AnalogGyroSim;
 import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim;
 import edu.wpi.first.wpilibj.simulation.EncoderSim;
 
-public class TankDriveSubsystem extends SubsystemBase {
+public class DriveTrainSubsystem extends SubsystemBase {
+    public final static int RIGHT = 1;
+    public final static int LEFT = -1;
+
     /**********************************************
      * 4 Wheels.   At this point it could be Omni, Mecanum, or Tank Drive
      * 
@@ -85,7 +88,7 @@ public class TankDriveSubsystem extends SubsystemBase {
         VecBuilder.fill(0.001, 0.001, 0.001, 0.1, 0.1, 0.005, 0.005));
     
     /** Creates a new TankDriveSubsystem Object */
-    public TankDriveSubsystem() {
+    public DriveTrainSubsystem() {
         System.out.println("TankDriveSubsystm Constructor");
 
         double wheelCircumference = ((2 * Math.PI) * Constants.wheelRadius);
@@ -126,6 +129,29 @@ public class TankDriveSubsystem extends SubsystemBase {
         encoderSim01.setDistance(m_driveSim.getLeftPositionMeters());
         encoderSim01.setRate(m_driveSim.getLeftVelocityMetersPerSecond());
         gyroSim00.setAngle(-m_driveSim.getHeading().getDegrees());
-        
+    }
+
+    public boolean moveForwardOrBack(double distance, double speed) {
+        boolean status = false;
+
+        return status;
+    }
+
+    public boolean strafeLeftOrRight(double distance, double speed) {
+        boolean status = false;
+
+        return status;
+    }
+
+    public boolean rotateLeftOrRight(double rotateAngle, double speed) {
+        boolean status = false;
+
+        return status;
+    }
+
+    public boolean turnLeftOrRight(double distance, double speed, int direction) {
+        boolean status = false;
+
+        return status;
     }
 }
