@@ -28,6 +28,14 @@ public final class Constants {
     public final static int motorControllerPort00 = 0;
     public final static int motorControllerPort01 = 1;
 
+    /*************************************
+     * Drive Train Motor Controller CAN device Ids
+     */
+    public final static int canMotorDeviceId01 = 10;
+    public final static int canMotorDeviceId02 = 13;
+    public final static int canMotorDeviceId03 = 5;
+    public final static int canMotorDeviceId04 = 8;
+
     /********************************************
      * Drive Train Encoder Channels
      */

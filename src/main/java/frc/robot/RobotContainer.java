@@ -26,8 +26,8 @@ public class RobotContainer {
 
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
-  private final DriveTrainSubsystem driveSubsystem = new DriveTrainSubsystem();
-  private final DriveTrainCommand driveCommand = new DriveTrainCommand(driveSubsystem);
+  private final DriveTrainSubsystem driveTrainSubsystem = new DriveTrainSubsystem();
+  private final DriveTrainCommand driveTrainCommand = new DriveTrainCommand(driveTrainSubsystem);
 
   /********************************************
    * Tank Drive Controls
@@ -67,7 +67,7 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    driveButton.whenPressed(tankDriveCommand);
+    driveButton.whenPressed(driveTrainCommand);
   }
 
   /**

@@ -14,4 +14,34 @@ public class LightingSubsystem extends SubsystemBase {
     @Override
     public void simulationPeriodic() {
     }
+
+    public boolean setHue() {
+        boolean status = false;
+
+        return status;
+    }
+
+    public boolean heartbeat() {
+        boolean status = false;
+
+        return status;
+    }
+
+    public boolean setRedAlliance() {
+        boolean status = false;
+
+        return status;
+    }
+
+    public boolean setBlueAlliance() {
+        boolean status = false;
+
+        return status;
+    }
+
+    public boolean setTeamColors() {
+        boolean status = false;
+
+        return status;
+    }
 }
