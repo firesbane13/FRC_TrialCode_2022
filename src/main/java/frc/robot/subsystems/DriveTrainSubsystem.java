@@ -2,6 +2,10 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
@@ -30,15 +34,36 @@ public class DriveTrainSubsystem extends SubsystemBase {
      * for each side together.
      */
     
-    private MotorController motorController00 = new PWMSparkMax(Constants.motorControllerPort00);
-    private MotorController motorController01 = new PWMSparkMax(Constants.motorControllerPort01);
-    
+    // private MotorController motorController00 = new PWMSparkMax(Constants.motorControllerPort00);
+    // private MotorController motorController01 = new PWMSparkMax(Constants.motorControllerPort01);
+    private MotorController motorController00 = new CANSparkMax(
+        Constants.canMotorDeviceId01,
+        MotorType.kBrushless
+    );
+
+    private MotorController motorController01 = new CANSparkMax(
+        Constants.canMotorDeviceId02, 
+        MotorType.kBrushless
+    );
+
+    private MotorController motorController02 = new CANSparkMax(
+        Constants.canMotorDeviceId03, 
+        MotorType.kBrushless
+    );
+
+    private MotorController motorController03 = new CANSparkMax(
+        Constants.canMotorDeviceId04, 
+        MotorType.kBrushless
+    );
+
     private MotorControllerGroup leftMotors = new MotorControllerGroup(
-        this.motorController00
+        this.motorController00,
+        this.motorController01
     );
 
     private MotorControllerGroup rightMotors = new MotorControllerGroup(
-        this.motorController01
+        this.motorController02,
+        this.motorController03
     );
     
 
@@ -96,12 +121,11 @@ public class DriveTrainSubsystem extends SubsystemBase {
         encoder00.setDistancePerPulse(wheelCircumference / Constants.encoder00PPR);
         encoder01.setDistancePerPulse(wheelCircumference / Constants.encoder00PPR);
         */
+
+        // Set rightMotors 
+        rightMotors.setInverted(true);
     }
 
-    public void drive() {
-        System.out.println("TankDriveSubsystm drive");
-        return;
-    }
 
     @Override
     public void periodic() {
@@ -129,6 +153,11 @@ public class DriveTrainSubsystem extends SubsystemBase {
         encoderSim01.setDistance(m_driveSim.getLeftPositionMeters());
         encoderSim01.setRate(m_driveSim.getLeftVelocityMetersPerSecond());
         gyroSim00.setAngle(-m_driveSim.getHeading().getDegrees());
+    }
+
+    public void drive() {
+        System.out.println("TankDriveSubsystm drive");
+        return;
     }
 
     public boolean moveForwardOrBack(double distance, double speed) {
