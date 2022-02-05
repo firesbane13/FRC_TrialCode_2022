@@ -13,48 +13,78 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-    /*************************************
-     * General Robot Constants
-     */
-    public final static double driveGearRatio = 7.29;   // 7.29:1 gearing reduction.
-    public final static double movementOfInertia = 7.5; // MOI of 7.5 kg m^2 (from CAD model).
-    public final static double massOfRobot = 60.0;      // The mass of the robot is 60 kg.
-    public final static double wheelRadius = 4;         // The robot uses 4" radius wheels.
-    public final static double trackWidth = 28;         // The track width is 0.7112 meters.
 
-    /*************************************
-     * Drive Train Motor Controller ports
-     */
-    public final static int motorControllerPort00 = 0;
-    public final static int motorControllerPort01 = 1;
+    public final class Robot {
+        /*************************************
+         * General Robot Constants
+         */
+        public final static double driveGearRatio    = 7.29;    // 7.29:1 gearing reduction.
+        public final static double movementOfInertia = 7.5;     // MOI of 7.5 kg m^2 (from CAD model).
+        public final static double massOfRobot       = 60.0;    // The mass of the robot is 60 kg.
+        public final static double wheelRadius       = 4;       // The robot uses 4" radius wheels.
+        public final static double trackWidth        = 28;      // The track width is 0.7112 meters.
+    }
 
-    /*************************************
-     * Drive Train Motor Controller CAN device Ids
-     */
-    public final static int canMotorDeviceId01 = 10;
-    public final static int canMotorDeviceId02 = 13;
-    public final static int canMotorDeviceId03 = 5;
-    public final static int canMotorDeviceId04 = 8;
+    public final class DriveTrain {
+        /***********************************************
+         * Drive Train Type
+         */
+        public final static int TANKDRIVE    = 1;   
+        public final static int MECANUMDRIVE = 2;   // X formation
+        public final static int OMNIDRIVE    = 3;   // 45 degree Omni-drive
+        public final static int SWERVEDRIVE  = 4;
 
-    /********************************************
-     * Drive Train Encoder Channels
-     */
-    public final static int encoder00ChannelA = 0;
-    public final static int encoder00ChannelB = 1;
-    public final static int encoder01ChannelA = 2;
-    public final static int encoder01ChannelB = 3;
+        public final static int DRIVESELECTED = TANKDRIVE;
 
-    public final static double encoder00PPR = 740;
+        /*************************************
+         * Drive Train Motor Controller ports
+         */
+        public final static int motorControllerPort00 = 0;
+        public final static int motorControllerPort01 = 1;
 
-    /**********************************************
-     * Gyroscopes
-     */
+        /*************************************
+         * Drive Train Motor Controller CAN device Ids
+         */
+        public final static int canMotorDeviceId01 = 10;
+        public final static int canMotorDeviceId02 = 13;
+        public final static int canMotorDeviceId03 = 5;
+        public final static int canMotorDeviceId04 = 8;
 
-    // This one is on analog ports.
-    public final static int gyro00Port00 = 0;
+        /********************************************
+         * Drive Train Encoder Channels
+         */
+        public final static int encoder00ChannelA = 0;
+        public final static int encoder00ChannelB = 1;
+        public final static int encoder01ChannelA = 2;
+        public final static int encoder01ChannelB = 3;
 
-    /**********************************************
-     * Simulation Variables
-     */
-    public final static int driveTrainNeosPerSide = 2;
+        public final static double encoder00PPR = 740;
+    }
+
+    public final class Sensors {
+        /**********************************************
+         * Gyroscopes
+         */
+
+        // This one is on analog ports.
+        public final static int gyro00Port00 = 0;
+    }
+
+    public final class Simulation { 
+        /**********************************************
+         * Simulation Variables
+         */
+        public final static int driveTrainNeosPerSide = 2;
+    }
+
+    public final class Joystick {
+        public final static int tankLeftPort    = 0;
+        public final static int tankRightPort   = 1;
+
+        public final static int xboxControllerPort = 0;
+
+        public final static int ps4ControllerPort = 0;
+
+        public final static int secondDriverPort = 2;
+    }
 }

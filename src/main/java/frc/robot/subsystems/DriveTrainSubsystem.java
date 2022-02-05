@@ -12,6 +12,7 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.RobotController;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
@@ -37,22 +38,22 @@ public class DriveTrainSubsystem extends SubsystemBase {
     // private MotorController motorController00 = new PWMSparkMax(Constants.motorControllerPort00);
     // private MotorController motorController01 = new PWMSparkMax(Constants.motorControllerPort01);
     private MotorController motorController00 = new CANSparkMax(
-        Constants.canMotorDeviceId01,
+        Constants.DriveTrain.canMotorDeviceId01,
         MotorType.kBrushless
     );
 
     private MotorController motorController01 = new CANSparkMax(
-        Constants.canMotorDeviceId02, 
+        Constants.DriveTrain.canMotorDeviceId02, 
         MotorType.kBrushless
     );
 
     private MotorController motorController02 = new CANSparkMax(
-        Constants.canMotorDeviceId03, 
+        Constants.DriveTrain.canMotorDeviceId03, 
         MotorType.kBrushless
     );
 
     private MotorController motorController03 = new CANSparkMax(
-        Constants.canMotorDeviceId04, 
+        Constants.DriveTrain.canMotorDeviceId04, 
         MotorType.kBrushless
     );
 
@@ -77,12 +78,12 @@ public class DriveTrainSubsystem extends SubsystemBase {
      */
     
     private Encoder encoder00 = new Encoder(
-        Constants.encoder00ChannelA, 
-        Constants.encoder00ChannelB
+        Constants.DriveTrain.encoder00ChannelA, 
+        Constants.DriveTrain.encoder00ChannelB
     );
     private Encoder encoder01 = new Encoder(
-        Constants.encoder01ChannelA, 
-        Constants.encoder01ChannelB
+        Constants.DriveTrain.encoder01ChannelA, 
+        Constants.DriveTrain.encoder01ChannelB
     );
 
     
@@ -91,19 +92,20 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
     
     // Mostly used for simulation
-    private AnalogGyro gyro00 = new AnalogGyro(Constants.gyro00Port00);
+    private AnalogGyro gyro00 = new AnalogGyro(Constants.Sensors.gyro00Port00);
     
     private AnalogGyroSim gyroSim00 = new AnalogGyroSim(this.gyro00);
 
+    DifferentialDrive m_drive = new DifferentialDrive(leftMotors, rightMotors);
     
     // Create the simulation model of our drivetrain.
     DifferentialDrivetrainSim m_driveSim = new DifferentialDrivetrainSim(
-        DCMotor.getNEO(Constants.driveTrainNeosPerSide),    // 2 NEO motors on each side of the drivetrain.
-        Constants.driveGearRatio,       // 7.29:1 gearing reduction.
-        Constants.movementOfInertia,    // MOI of 7.5 kg m^2 (from CAD model).
-        Constants.massOfRobot,          // The mass of the robot is 60 kg.
-        Units.inchesToMeters(Constants.wheelRadius),    // The robot uses 4" radius wheels.
-        Units.inchesToMeters(Constants.trackWidth),     // The track width is 0.7112 meters.
+        DCMotor.getNEO(Constants.Simulation.driveTrainNeosPerSide),    // 2 NEO motors on each side of the drivetrain.
+        Constants.Robot.driveGearRatio,       // 7.29:1 gearing reduction.
+        Constants.Robot.movementOfInertia,    // MOI of 7.5 kg m^2 (from CAD model).
+        Constants.Robot.massOfRobot,          // The mass of the robot is 60 kg.
+        Units.inchesToMeters(Constants.Robot.wheelRadius),    // The robot uses 4" radius wheels.
+        Units.inchesToMeters(Constants.Robot.trackWidth),     // The track width is 0.7112 meters.
 
         // The standard deviations for measurement noise:
         // x and y:          0.001 m
@@ -116,16 +118,15 @@ public class DriveTrainSubsystem extends SubsystemBase {
     public DriveTrainSubsystem() {
         System.out.println("TankDriveSubsystm Constructor");
 
-        double wheelCircumference = ((2 * Math.PI) * Constants.wheelRadius);
-        /*
-        encoder00.setDistancePerPulse(wheelCircumference / Constants.encoder00PPR);
-        encoder01.setDistancePerPulse(wheelCircumference / Constants.encoder00PPR);
-        */
+        double wheelCircumference = ((2 * Math.PI) * Constants.Robot.wheelRadius);
+        
+        encoder00.setDistancePerPulse(wheelCircumference / Constants.DriveTrain.encoder00PPR);
+        encoder01.setDistancePerPulse(wheelCircumference / Constants.DriveTrain.encoder00PPR);
 
-        // Set rightMotors 
+        // Set rightMotors reversed
         rightMotors.setInverted(true);
-    }
 
+    }
 
     @Override
     public void periodic() {
@@ -155,9 +156,24 @@ public class DriveTrainSubsystem extends SubsystemBase {
         gyroSim00.setAngle(-m_driveSim.getHeading().getDegrees());
     }
 
-    public void drive() {
-        System.out.println("TankDriveSubsystm drive");
-        return;
+    public boolean tankDrive(double leftSpeed, double rightSpeed) {
+        boolean status = true;
+
+        System.out.println("DriveTrainSubsystem tankDrive");
+
+        m_drive.tankDrive(leftSpeed, rightSpeed);
+
+        return status;
+    }
+
+    public boolean arcadeDrive(double speed, double rotation) {
+        boolean status = true;
+
+        System.out.println("DriveTrainSubsystem arcadeDrive");
+
+        m_drive.arcadeDrive(speed, rotation);
+
+        return status;
     }
 
     public boolean moveForwardOrBack(double distance, double speed) {

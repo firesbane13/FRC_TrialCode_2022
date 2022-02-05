@@ -36,7 +36,7 @@ public class DriveTrainCommand extends CommandBase {
     // Call every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        driveTrainSubsystem.drive();
+        driveTrainSubsystem.tankDrive(0.10, 0.10);
     }
 
     // Called once the command ends or is interrupted.
