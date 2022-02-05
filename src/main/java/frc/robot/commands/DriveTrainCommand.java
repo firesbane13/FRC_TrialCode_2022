@@ -12,7 +12,7 @@ public class DriveTrainCommand extends CommandBase {
     } )
 
     private final DriveTrainSubsystem driveTrainSubsystem;
-    private Joystick leftJoystick = Robot.m_robotContainer.joystick00;
+    // private Joystick leftJoystick = Robot.m_robotContainer.joystick00;
 
 
     /**

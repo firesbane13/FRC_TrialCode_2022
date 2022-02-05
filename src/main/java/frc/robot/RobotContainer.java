@@ -32,7 +32,7 @@ public class RobotContainer {
   public Joystick joystick01 = new Joystick(Constants.Joystick.tankRightPort);
   public Joystick joystick02 = new Joystick(Constants.Joystick.secondDriverPort);
 
-  private JoystickButton driveButton = new JoystickButton(joystick00, 1);
+  // private JoystickButton driveButton = new JoystickButton(joystick00, 1);
 
   private final DriveTrainSubsystem m_robotDrive = new DriveTrainSubsystem();
 
@@ -82,7 +82,7 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    driveButton.whenPressed(driveTrainCommand);
+    // driveButton.whenPressed(driveTrainCommand);
   }
 
   /**

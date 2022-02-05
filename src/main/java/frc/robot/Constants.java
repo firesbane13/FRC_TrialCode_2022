@@ -78,7 +78,7 @@ public final class Constants {
     }
 
     public final class Joystick {
-        public final static int tankLeftPort    = 0;
+        public final static int tankLeftPort    = 4;
         public final static int tankRightPort   = 1;
 
         public final static int xboxControllerPort = 0;
