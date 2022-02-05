@@ -78,13 +78,19 @@ public final class Constants {
     }
 
     public final class Joystick {
-        public final static int tankLeftPort    = 4;
+        // Joystick Only Drive Station Ports
+        public final static int tankLeftPort    = 0;
         public final static int tankRightPort   = 1;
 
-        public final static int xboxControllerPort = 0;
-
-        public final static int ps4ControllerPort = 0;
-
+        // Joystick Only Drive Station Ports
         public final static int secondDriverPort = 2;
+
+        // Controller Only Drive Stations 
+        public final static int firstControllerPort  = 4;
+        public final static int secondControllerPort = 5;
+
+        public final static int xboxControllerPort = 6;
+
+        public final static int ps4ControllerPort = 7;
     }
 }
