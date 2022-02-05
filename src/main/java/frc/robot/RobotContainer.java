@@ -7,11 +7,10 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.DriveTrainCommand;
-import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 /**
@@ -22,10 +21,6 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-
-  private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
-
   private final DriveTrainSubsystem driveTrainSubsystem = new DriveTrainSubsystem();
   private final DriveTrainCommand driveTrainCommand = new DriveTrainCommand(driveTrainSubsystem);
 
@@ -33,15 +28,13 @@ public class RobotContainer {
    * Tank Drive Controls
    */
   // Controls Left Wheels
-  public Joystick joystick00 = new Joystick(0);
-
-  // Controls Right Wheels
-  // private Joystick joystick01 = new Joystick(1);
-
-  // Controls for Alternate 
-  // private Joystick joystick02 = new Joystick(2);
+  public Joystick joystick00 = new Joystick(Constants.Joystick.tankLeftPort);
+  public Joystick joystick01 = new Joystick(Constants.Joystick.tankRightPort);
+  public Joystick joystick02 = new Joystick(Constants.Joystick.secondDriverPort);
 
   private JoystickButton driveButton = new JoystickButton(joystick00, 1);
+
+  private final DriveTrainSubsystem m_robotDrive = new DriveTrainSubsystem();
 
   /*********************************************
    * XBox Controller
@@ -58,6 +51,28 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
+
+    /*
+    m_robotDrive.setDefaultCommand(
+      new RunCommand(
+        () -> 
+          m_robotDrive.arcadeDrive(
+            joystick00.getY(),
+            joystick00.getX()
+          ),
+          m_robotDrive)
+    );
+    */
+
+    m_robotDrive.setDefaultCommand(
+      new RunCommand(
+        () -> 
+          m_robotDrive.testDrive(
+            joystick00.getY()
+          ), 
+        m_robotDrive
+      )
+    );
   }
 
   /**
@@ -75,8 +90,8 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
+  /*
   public Command getAutonomousCommand() {
-    // An ExampleCommand will run in autonomous
-    return m_autoCommand;
   }
+  */
 }

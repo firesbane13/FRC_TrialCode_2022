@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -15,12 +16,21 @@ import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
-import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 import edu.wpi.first.wpilibj.simulation.AnalogGyroSim;
 import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim;
 import edu.wpi.first.wpilibj.simulation.EncoderSim;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.*;
+
 public class DriveTrainSubsystem extends SubsystemBase {
+    /**
+     *
+     */
+    private static final Encoder ENCODER = new Encoder(
+        Constants.DriveTrain.encoder01ChannelA, 
+        Constants.DriveTrain.encoder01ChannelB
+    );
     public final static int RIGHT = 1;
     public final static int LEFT = -1;
 
@@ -57,6 +67,8 @@ public class DriveTrainSubsystem extends SubsystemBase {
         MotorType.kBrushless
     );
 
+    private TalonFX talonMotorController = new TalonFX(44);
+
     private MotorControllerGroup leftMotors = new MotorControllerGroup(
         this.motorController00,
         this.motorController01
@@ -66,7 +78,6 @@ public class DriveTrainSubsystem extends SubsystemBase {
         this.motorController02,
         this.motorController03
     );
-    
 
     /************************************************
      * Drive Train Encoders
@@ -81,10 +92,8 @@ public class DriveTrainSubsystem extends SubsystemBase {
         Constants.DriveTrain.encoder00ChannelA, 
         Constants.DriveTrain.encoder00ChannelB
     );
-    private Encoder encoder01 = new Encoder(
-        Constants.DriveTrain.encoder01ChannelA, 
-        Constants.DriveTrain.encoder01ChannelB
-    );
+
+    private Encoder encoder01 = ENCODER;
 
     
     private EncoderSim encoderSim00 = new EncoderSim(this.encoder00);
@@ -154,6 +163,10 @@ public class DriveTrainSubsystem extends SubsystemBase {
         encoderSim01.setDistance(m_driveSim.getLeftPositionMeters());
         encoderSim01.setRate(m_driveSim.getLeftVelocityMetersPerSecond());
         gyroSim00.setAngle(-m_driveSim.getHeading().getDegrees());
+    }
+
+    public void testDrive(double speed) {
+        talonMotorController.set(ControlMode.PercentOutput, speed);
     }
 
     public boolean tankDrive(double leftSpeed, double rightSpeed) {
