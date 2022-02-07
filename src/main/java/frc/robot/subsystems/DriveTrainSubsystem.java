@@ -156,7 +156,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
         encoderSim00.setDistance(m_driveSim.getLeftPositionMeters());
         encoderSim00.setRate(m_driveSim.getLeftVelocityMetersPerSecond());
         encoderSim01.setDistance(m_driveSim.getLeftPositionMeters());
-        encoderSim01.setRate(m_driveSim.getLeftVelocityMetersPerSecond());4
+        encoderSim01.setRate(m_driveSim.getLeftVelocityMetersPerSecond());
 
         gyroSim00.setAngle(-m_driveSim.getHeading().getDegrees());
     }
