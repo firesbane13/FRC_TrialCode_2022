@@ -92,5 +92,11 @@ public final class Constants {
         public final static int xboxControllerPort = 6;
 
         public final static int ps4ControllerPort = 7;
+
+        // Joystick configuration
+        public final static int JOYSTICKS  = 1;
+        public final static int CONTROLLER = 2;
+
+        public final static int CONFIGURATION = JOYSTICKS;
     }
 }
