@@ -21,8 +21,10 @@ public final class Constants {
         public final static double driveGearRatio    = 7.29;    // 7.29:1 gearing reduction.
         public final static double movementOfInertia = 7.5;     // MOI of 7.5 kg m^2 (from CAD model).
         public final static double massOfRobot       = 60.0;    // The mass of the robot is 60 kg.
-        public final static double wheelRadius       = 4;       // The robot uses 4" radius wheels.
+        public final static double wheelRadius       = 8;       // The robot uses 8" radius wheels.
         public final static double trackWidth        = 28;      // The track width is 0.7112 meters.
+        public final static double robotRadius       = 48;      // Robot radius in inches.
+
     }
 
     public final class DriveTrain {
@@ -51,14 +53,35 @@ public final class Constants {
         public final static int canMotorDeviceId04 = 8;
 
         /********************************************
-         * Drive Train Encoder Channels
+         * Drive Train Encoders
          */
+        public final static int sameDriveEncoder = 4096;
+
         public final static int encoder00ChannelA = 0;
         public final static int encoder00ChannelB = 1;
+        public final static int encoder00PPR = sameDriveEncoder;
+
         public final static int encoder01ChannelA = 2;
         public final static int encoder01ChannelB = 3;
+        public final static int encoder01PPR = sameDriveEncoder;
 
-        public final static double encoder00PPR = 740;
+        public final static int encoder02ChannelA = 2;
+        public final static int encoder02ChannelB = 3;
+        public final static int encoder02PPR = sameDriveEncoder;
+
+        public final static int encoder03ChannelA = 2;
+        public final static int encoder03ChannelB = 3;
+        public final static int encoder03PPR = sameDriveEncoder;
+
+        public final static double movementInInches00 = ( encoder00PPR / ( Robot.wheelRadius * Math.PI ) );
+        public final static double movementInInches01 = ( encoder01PPR / ( Robot.wheelRadius * Math.PI ) );
+        public final static double movementInInches02 = ( encoder02PPR / ( Robot.wheelRadius * Math.PI ) );
+        public final static double movementInInches03 = ( encoder03PPR / ( Robot.wheelRadius * Math.PI ) );
+
+        public final static double movementPerDegree00 = ( ( Robot.robotRadius / ( Robot.wheelRadius / 2 ) ) * encoder00PPR ) /360;
+        public final static double movementPerDegree01 = ( ( Robot.robotRadius / ( Robot.wheelRadius / 2 ) ) * encoder01PPR ) /360;
+        public final static double movementPerDegree02 = ( ( Robot.robotRadius / ( Robot.wheelRadius / 2 ) ) * encoder02PPR ) /360;
+        public final static double movementPerDegree03 = ( ( Robot.robotRadius / ( Robot.wheelRadius / 2 ) ) * encoder03PPR ) /360;
     }
 
     public final class Sensors {
