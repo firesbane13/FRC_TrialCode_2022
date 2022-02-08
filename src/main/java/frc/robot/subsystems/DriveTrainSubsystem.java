@@ -21,7 +21,6 @@ import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim;
 import edu.wpi.first.wpilibj.simulation.EncoderSim;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.*;
 
 public class DriveTrainSubsystem extends SubsystemBase {
     public final static int RIGHT = 1;
@@ -161,10 +160,26 @@ public class DriveTrainSubsystem extends SubsystemBase {
         gyroSim00.setAngle(-m_driveSim.getHeading().getDegrees());
     }
 
+    /**
+     * testDrive()
+     * 
+     * This was to test if Joystick axis data to a motor
+     * 
+     * @param speed
+     */
     public void testDrive(double speed) {
         talonMotorController.set(ControlMode.PercentOutput, speed);
     }
 
+    /**
+     * tankDrive()
+     * 
+     * Functionality to implement tank drive.
+     * 
+     * @param leftSpeed
+     * @param rightSpeed
+     * @return
+     */
     public boolean tankDrive(double leftSpeed, double rightSpeed) {
         boolean status = true;
 
@@ -175,6 +190,15 @@ public class DriveTrainSubsystem extends SubsystemBase {
         return status;
     }
 
+    /**
+     * arcadeDrive()
+     * 
+     * A basic drive train for Mecnum and Omnidriver
+     * 
+     * @param speed
+     * @param rotation
+     * @return
+     */
     public boolean arcadeDrive(double speed, double rotation) {
         boolean status = true;
 
@@ -185,24 +209,65 @@ public class DriveTrainSubsystem extends SubsystemBase {
         return status;
     }
 
+    /**
+     * moveForwardOrBack(distance, speed)
+     * 
+     * Meant for autonomous for moving forward or back a specified number of inches.
+     * 
+     * @param distance
+     * @param speed
+     * @return
+     */
     public boolean moveForwardOrBack(double distance, double speed) {
         boolean status = false;
 
         return status;
     }
 
+    /**
+     * strafeLeftOrRight(distance, speed)
+     * 
+     * Meant for autonomous for moving left or right a specified number of inches.
+     * This is mean for Mecnum and 45 deg Omniwheels
+     * 
+     * @param distance
+     * @param speed
+     * @return
+     */
     public boolean strafeLeftOrRight(double distance, double speed) {
         boolean status = false;
 
         return status;
     }
 
+    /**
+     * rotateLeftOrRight(rotateAngle, speed) 
+     * 
+     * Meant for autonomous for rotating a specified angle in degrees
+     * 
+     * @param rotateAngle
+     * @param speed
+     * @return
+     */
     public boolean rotateLeftOrRight(double rotateAngle, double speed) {
         boolean status = false;
 
         return status;
     }
 
+    /**
+     * turnLeftOrRight(distance, speed, direction)
+     * 
+     * This is used to move forward or back and turning left or right a specified 
+     * number of inches.
+     * 
+     * Meant for autonomous.
+     * 
+     * @param distance
+     * @param speed
+     * @param direction
+     * @return
+     */
     public boolean turnLeftOrRight(double distance, double speed, int direction) {
         boolean status = false;
 
