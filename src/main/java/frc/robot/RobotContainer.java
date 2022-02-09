@@ -7,8 +7,8 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import frc.robot.commands.FireCommand;
 import frc.robot.subsystems.DriveTrainSubsystem;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
@@ -21,6 +21,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final DriveTrainSubsystem driveTrainSubsystem = new DriveTrainSubsystem();
+  private FireCommand fireCommand = new FireCommand();
 
   /********************************************
    * Tank Drive Controls
@@ -32,7 +33,7 @@ public class RobotContainer {
 
   public Joystick controller00 = new Joystick(Constants.Joystick.firstControllerPort);
   public Joystick controller01 = new Joystick(Constants.Joystick.secondControllerPort);
-  public JoystickButton shooterBtn = new JoystickButton(joystick00, 5);
+  public JoystickButton fireBtn = new JoystickButton(joystick00, 1);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -81,7 +82,7 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    // shooterBtn.whenPressed(driveTrainCommand);
+    fireBtn.whenPressed(fireCommand);
   }
 
   /**
