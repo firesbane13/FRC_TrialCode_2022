@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -31,6 +32,7 @@ public class RobotContainer {
 
   public Joystick controller00 = new Joystick(Constants.Joystick.firstControllerPort);
   public Joystick controller01 = new Joystick(Constants.Joystick.secondControllerPort);
+  public JoystickButton shooterBtn = new JoystickButton(joystick00, 5);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -79,7 +81,7 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    // driveButton.whenPressed(driveTrainCommand);
+    // shooterBtn.whenPressed(driveTrainCommand);
   }
 
   /**

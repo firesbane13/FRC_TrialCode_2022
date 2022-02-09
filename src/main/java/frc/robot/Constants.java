@@ -100,6 +100,11 @@ public final class Constants {
         public final static int driveTrainNeosPerSide = 2;
     }
 
+    public final class Shooter {
+        public final static int talonMotorControllerId = 44;
+        public final static int victorMotorControllerPort = 0;
+    }
+
     public final class Joystick {
         // Joystick Only Drive Station Ports
         public final static int tankLeftPort    = 0;
