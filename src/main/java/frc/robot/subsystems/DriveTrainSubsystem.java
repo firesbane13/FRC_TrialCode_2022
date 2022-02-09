@@ -7,6 +7,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.hal.simulation.DIODataJNI;
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
@@ -40,7 +41,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
     // private MotorController motorController00 = new PWMSparkMax(Constants.motorControllerPort00);
     // private MotorController motorController01 = new PWMSparkMax(Constants.motorControllerPort01);
     
-    private MotorController motorController00 = new CANSparkMax(
+    public MotorController motorController00 = new CANSparkMax(
         Constants.DriveTrain.canMotorDeviceId01,
         MotorType.kBrushless
     );
@@ -100,6 +101,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
     private AnalogGyroSim gyroSim00 = new AnalogGyroSim(this.gyro00);
 
     DifferentialDrive m_drive = new DifferentialDrive(leftMotors, rightMotors);
+    // DifferentialDrive m_drive = new DifferentialDrive(motorController02,motorController03);
     
     // Create the simulation model of our drivetrain.
     DifferentialDrivetrainSim m_driveSim = new DifferentialDrivetrainSim(
@@ -125,10 +127,14 @@ public class DriveTrainSubsystem extends SubsystemBase {
       
         encoder00.setDistancePerPulse(wheelCircumference / Constants.DriveTrain.encoder00PPR);
         encoder01.setDistancePerPulse(wheelCircumference / Constants.DriveTrain.encoder00PPR);
-
         // Set rightMotors reversed
-        rightMotors.setInverted(true);
+        rightMotors.setInverted(true);        
+        // motorController01.setInverted(false);
 
+        /*
+        motorController00.setInverted(true);
+        motorController03.setInverted(true);
+        */
     }
 
     @Override
@@ -168,7 +174,8 @@ public class DriveTrainSubsystem extends SubsystemBase {
      * @param speed
      */
     public void testDrive(double speed) {
-        talonMotorController.set(ControlMode.PercentOutput, speed);
+        // talonMotorController.set(ControlMode.PercentOutput, speed);
+        motorController03.set(speed);
     }
 
     /**

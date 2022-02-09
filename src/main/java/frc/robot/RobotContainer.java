@@ -37,15 +37,39 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
 
+    
     driveTrainSubsystem.setDefaultCommand(
       new RunCommand(
         () -> 
-          driveTrainSubsystem.tankDrive(
-            joystick00.getY(),
-            joystick01.getY()
+          driveTrainSubsystem.arcadeDrive(
+            controller00.getY(),
+            controller00.getX()
           ),
         driveTrainSubsystem)
       );
+    
+      /*
+    driveTrainSubsystem.setDefaultCommand(
+      new RunCommand(
+        () -> 
+          driveTrainSubsystem.testDrive(
+            controller00.getY()
+          ),
+        driveTrainSubsystem)
+      );
+      */
+
+  /*
+  driveTrainSubsystem.setDefaultCommand(
+    new RunCommand(
+      () -> 
+        driveTrainSubsystem.tankDrive(
+          joystick00.getY(),
+          joystick01.getY()
+        ),
+      driveTrainSubsystem)
+    );
+  */
   }
 
   /**
