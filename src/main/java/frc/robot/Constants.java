@@ -126,5 +126,18 @@ public final class Constants {
         public final static int CONTROLLER = 2;
 
         public final static int CONFIGURATION = JOYSTICKS;
+
+        public final static int FIRESHOOTERBTN = 1;
+        public final static int FEEDSHOOTERBTN = 2;
+
+        public final static int CLEARSHOOTERBTN = 7;
+        public final static int CLEARFEEDERBTN  = 8;
+
+        public final static int RAISELOWERCOLLECTOR = 5;
+        public final static int COLLECTORONOFF = 3;
+
+        public final static int CLEARCOLLECTOR = 9;
+        public final static int CLEARINDEXER   = 10;
+
     }
 }
