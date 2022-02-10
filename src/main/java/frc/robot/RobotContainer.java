@@ -7,7 +7,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.commands.FireCommand;
+import frc.robot.commands.ShooterFireCommand;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -21,7 +21,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final DriveTrainSubsystem driveTrainSubsystem = new DriveTrainSubsystem();
-  private FireCommand fireCommand = new FireCommand();
+  private ShooterFireCommand fireCommand = new ShooterFireCommand();
 
   /********************************************
    * Tank Drive Controls
@@ -33,7 +33,19 @@ public class RobotContainer {
 
   public Joystick controller00 = new Joystick(Constants.Joystick.firstControllerPort);
   public Joystick controller01 = new Joystick(Constants.Joystick.secondControllerPort);
-  public JoystickButton fireBtn = new JoystickButton(joystick00, 1);
+
+  public JoystickButton fireBtn        = new JoystickButton(joystick02, Constants.Joystick.FIRESHOOTERBTN);
+  public JoystickButton feedShooterBtn = new JoystickButton(joystick02, Constants.Joystick.FEEDSHOOTERBTN);
+
+  public JoystickButton clearShooterBtn = new JoystickButton(joystick02, Constants.Joystick.CLEARSHOOTERBTN);
+  public JoystickButton clearFeederBtn  = new JoystickButton(joystick02, Constants.Joystick.CLEARFEEDERBTN);
+
+  public JoystickButton raiseLowerCollectorBtn = new JoystickButton(joystick02, Constants.Joystick.RAISELOWERCOLLECTOR);
+  public JoystickButton collectorOnOffBtn      = new JoystickButton(joystick02, Constants.Joystick.COLLECTORONOFF);
+
+  public JoystickButton clearCollectorBtn = new JoystickButton(joystick02, Constants.Joystick.CLEARCOLLECTOR);
+  public JoystickButton clearIndexerBtn   = new JoystickButton(joystick02, Constants.Joystick.CLEARINDEXER);
+
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -44,35 +56,12 @@ public class RobotContainer {
     driveTrainSubsystem.setDefaultCommand(
       new RunCommand(
         () -> 
-          driveTrainSubsystem.arcadeDrive(
+          driveTrainSubsystem.tankDrive(
             controller00.getY(),
-            controller00.getX()
+            controller01.getY()
           ),
         driveTrainSubsystem)
       );
-    
-      /*
-    driveTrainSubsystem.setDefaultCommand(
-      new RunCommand(
-        () -> 
-          driveTrainSubsystem.testDrive(
-            controller00.getY()
-          ),
-        driveTrainSubsystem)
-      );
-      */
-
-  /*
-  driveTrainSubsystem.setDefaultCommand(
-    new RunCommand(
-      () -> 
-        driveTrainSubsystem.tankDrive(
-          joystick00.getY(),
-          joystick01.getY()
-        ),
-      driveTrainSubsystem)
-    );
-  */
   }
 
   /**
