@@ -33,6 +33,8 @@ public class VisionSubsystem extends SubsystemBase {
     public boolean findTarget() {
         boolean status = false;
 
+        status = isValidTarget();
+
         return status;
     }
 

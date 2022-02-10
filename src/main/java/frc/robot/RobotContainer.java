@@ -7,9 +7,17 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import frc.robot.commands.CollectorLowerCollectorCommand;
+import frc.robot.commands.CollectorRaiseCollectorCommand;
+import frc.robot.commands.ShooterFeedInCommand;
+import frc.robot.commands.ShooterFeedOutCommand;
 import frc.robot.commands.ShooterFireCommand;
+import frc.robot.commands.ShooterStopFeederCommand;
+import frc.robot.commands.ShooterStopShooterCommand;
+import frc.robot.subsystems.CollectorSubsystem;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 /**
@@ -22,6 +30,18 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final DriveTrainSubsystem driveTrainSubsystem = new DriveTrainSubsystem();
   private ShooterFireCommand fireCommand = new ShooterFireCommand();
+  private ShooterStopShooterCommand stopShooterCommand = new ShooterStopShooterCommand();
+
+  private ShooterFeedInCommand feedInCommand = new ShooterFeedInCommand();
+  private ShooterFeedOutCommand feedOutCommand = new ShooterFeedOutCommand();
+  private ShooterStopFeederCommand stopFeederCommand = new ShooterStopFeederCommand();
+
+  /*
+  private CollectorLowerCollectorCommand lowerCollectorCommand = new CollectorLowerCollectorCommand();
+  private CollectorRaiseCollectorCommand raiseCollectorCommand = new CollectorRaiseCollectorCommand();
+  */
+
+  private CollectorSubsystem m_collector = new CollectorSubsystem();
 
   /********************************************
    * Tank Drive Controls
@@ -34,17 +54,17 @@ public class RobotContainer {
   public Joystick controller00 = new Joystick(Constants.Joystick.firstControllerPort);
   public Joystick controller01 = new Joystick(Constants.Joystick.secondControllerPort);
 
-  public JoystickButton fireBtn        = new JoystickButton(joystick02, Constants.Joystick.FIRESHOOTERBTN);
-  public JoystickButton feedShooterBtn = new JoystickButton(joystick02, Constants.Joystick.FEEDSHOOTERBTN);
+  public JoystickButton fireBtn        = new JoystickButton(joystick02, Constants.Joystick.fireShooterBtn);
+  public JoystickButton feedShooterBtn = new JoystickButton(joystick02, Constants.Joystick.feedShooterBtn);
 
-  public JoystickButton clearShooterBtn = new JoystickButton(joystick02, Constants.Joystick.CLEARSHOOTERBTN);
-  public JoystickButton clearFeederBtn  = new JoystickButton(joystick02, Constants.Joystick.CLEARFEEDERBTN);
+  public JoystickButton clearShooterBtn = new JoystickButton(joystick02, Constants.Joystick.clearShooterBtn);
+  public JoystickButton clearFeederBtn  = new JoystickButton(joystick02, Constants.Joystick.clearFeederBtn);
 
-  public JoystickButton raiseLowerCollectorBtn = new JoystickButton(joystick02, Constants.Joystick.RAISELOWERCOLLECTOR);
-  public JoystickButton collectorOnOffBtn      = new JoystickButton(joystick02, Constants.Joystick.COLLECTORONOFF);
+  public JoystickButton raiseLowerCollectorBtn = new JoystickButton(joystick02, Constants.Joystick.raiseLowerCollectorBtn);
+  public JoystickButton collectorOnOffBtn      = new JoystickButton(joystick02, Constants.Joystick.collectorOnOffBtn);
 
-  public JoystickButton clearCollectorBtn = new JoystickButton(joystick02, Constants.Joystick.CLEARCOLLECTOR);
-  public JoystickButton clearIndexerBtn   = new JoystickButton(joystick02, Constants.Joystick.CLEARINDEXER);
+  public JoystickButton clearCollectorBtn = new JoystickButton(joystick02, Constants.Joystick.clearCollectorBtn);
+  public JoystickButton clearIndexerBtn   = new JoystickButton(joystick02, Constants.Joystick.clearIndexerBtn);
 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -57,8 +77,8 @@ public class RobotContainer {
       new RunCommand(
         () -> 
           driveTrainSubsystem.tankDrive(
-            controller00.getY(),
-            controller01.getY()
+            joystick00.getY(),
+            joystick01.getY()
           ),
         driveTrainSubsystem)
       );
@@ -72,6 +92,23 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     fireBtn.whenPressed(fireCommand);
+    fireBtn.whenReleased(stopShooterCommand);
+
+    feedShooterBtn.whenPressed(feedInCommand);
+    feedShooterBtn.whenReleased(stopFeederCommand);
+
+    clearFeederBtn.whenPressed(feedOutCommand);
+    clearFeederBtn.whenReleased(stopFeederCommand);
+
+    /*
+    raiseLowerCollectorBtn.toggleWhenPressed(
+      new StartEndCommand(
+        m_collector.lowerCollector(Constants.Collector.raiseLowerSpeed), 
+        m_collector.raiseCollector(Constants.Collector.raiseLowerSpeed), 
+        m_collector
+      )
+    );
+    */
   }
 
   /**

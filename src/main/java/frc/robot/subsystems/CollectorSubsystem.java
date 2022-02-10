@@ -1,6 +1,9 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.motorcontrol.MotorController;
+import edu.wpi.first.wpilibj.motorcontrol.VictorSP;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 public class CollectorSubsystem extends SubsystemBase {
 
@@ -9,6 +12,8 @@ public class CollectorSubsystem extends SubsystemBase {
     
     private final static int RAISE = 1;
     private final static int LOWER = -1;
+
+    private MotorController victorSpMotorController = new VictorSP(Constants.Collector.raiseLowerPort);
 
     public CollectorSubsystem() {
     }
@@ -86,14 +91,34 @@ public class CollectorSubsystem extends SubsystemBase {
         return status;
     }
 
+    /**
+     * intake()
+     * 
+     * intakeIn and intakeOut call this function with a direction
+     * 
+     * @param speed
+     * @param direction
+     * @return
+     */
     private boolean intake(double speed, int direction) {
         boolean status = false;
 
         return status;
     }
 
+    /**
+     * collectorPosition()
+     * 
+     * raiseCollector and lowerCollector call this function with a direction
+     * 
+     * @param speed
+     * @param direction
+     * @return
+     */
     private boolean collectorPosition(double speed, int direction) {
         boolean status = false;
+
+        victorSpMotorController.set(Constants.Collector.raiseLowerSpeed);
 
         return status;
     }

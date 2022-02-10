@@ -3,11 +3,10 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-import edu.wpi.first.hal.simulation.DIODataJNI;
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
@@ -20,8 +19,6 @@ import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.simulation.AnalogGyroSim;
 import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim;
 import edu.wpi.first.wpilibj.simulation.EncoderSim;
-
-import com.ctre.phoenix.motorcontrol.ControlMode;
 
 public class DriveTrainSubsystem extends SubsystemBase {
     public final static int RIGHT = 1;
@@ -38,9 +35,12 @@ public class DriveTrainSubsystem extends SubsystemBase {
      * for each side together.
      */
     
-    // private MotorController motorController00 = new PWMSparkMax(Constants.motorControllerPort00);
-    // private MotorController motorController01 = new PWMSparkMax(Constants.motorControllerPort01);
+    public MotorController motorController00 = new Spark(Constants.DriveTrain.motorControllerPort00);
+    public MotorController motorController01 = new Spark(Constants.DriveTrain.motorControllerPort01);
+    public MotorController motorController02 = new Spark(Constants.DriveTrain.motorControllerPort02);
+    public MotorController motorController03 = new Spark(Constants.DriveTrain.motorControllerPort03);
     
+    /*
     public MotorController motorController00 = new CANSparkMax(
         Constants.DriveTrain.canMotorDeviceId01,
         MotorType.kBrushless
@@ -60,6 +60,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
         Constants.DriveTrain.canMotorDeviceId04, 
         MotorType.kBrushless
     );
+    */
 
     private MotorControllerGroup leftMotors = new MotorControllerGroup(
         this.motorController00,
@@ -70,8 +71,6 @@ public class DriveTrainSubsystem extends SubsystemBase {
         this.motorController02,
         this.motorController03
     );
-
-    private TalonFX talonMotorController = new TalonFX(44);
 
     /************************************************
      * Drive Train Encoders
@@ -91,19 +90,33 @@ public class DriveTrainSubsystem extends SubsystemBase {
         Constants.DriveTrain.encoder01ChannelA, 
         Constants.DriveTrain.encoder01ChannelB
     );
+
+    private Encoder encoder02 = new Encoder(
+        Constants.DriveTrain.encoder02ChannelA, 
+        Constants.DriveTrain.encoder02ChannelB
+    );
     
+    private Encoder encoder03 = new Encoder(
+        Constants.DriveTrain.encoder03ChannelA, 
+        Constants.DriveTrain.encoder03ChannelB
+    );
+
+    /*
     private EncoderSim encoderSim00 = new EncoderSim(this.encoder00);
     private EncoderSim encoderSim01 = new EncoderSim(this.encoder01);
-    
+    */
+
     // Mostly used for simulation
+    /*
     private AnalogGyro gyro00 = new AnalogGyro(Constants.Sensors.gyro00Port00);
     
     private AnalogGyroSim gyroSim00 = new AnalogGyroSim(this.gyro00);
+    */
 
     DifferentialDrive m_drive = new DifferentialDrive(leftMotors, rightMotors);
-    // DifferentialDrive m_drive = new DifferentialDrive(motorController02,motorController03);
     
     // Create the simulation model of our drivetrain.
+    /*
     DifferentialDrivetrainSim m_driveSim = new DifferentialDrivetrainSim(
         DCMotor.getNEO(Constants.Simulation.driveTrainNeosPerSide),    // 2 NEO motors on each side of the drivetrain.
         Constants.Robot.driveGearRatio,       // 7.29:1 gearing reduction.
@@ -118,23 +131,19 @@ public class DriveTrainSubsystem extends SubsystemBase {
         // l and r velocity: 0.1   m/s
         // l and r pzzosition: 0.005 m
         VecBuilder.fill(0.001, 0.001, 0.001, 0.1, 0.1, 0.005, 0.005));
-    
+    */
+
     /** Creates a new TankDriveSubsystem Object */
     public DriveTrainSubsystem() {
-        System.out.println("TankDriveSubsystm Constructor");
-
         double wheelCircumference = ((2 * Math.PI) * Constants.Robot.wheelRadius);
       
         encoder00.setDistancePerPulse(wheelCircumference / Constants.DriveTrain.encoder00PPR);
-        encoder01.setDistancePerPulse(wheelCircumference / Constants.DriveTrain.encoder00PPR);
+        encoder01.setDistancePerPulse(wheelCircumference / Constants.DriveTrain.encoder01PPR);
+        encoder02.setDistancePerPulse(wheelCircumference / Constants.DriveTrain.encoder02PPR);
+        encoder03.setDistancePerPulse(wheelCircumference / Constants.DriveTrain.encoder03PPR);
+
         // Set rightMotors reversed
         rightMotors.setInverted(true);        
-        // motorController01.setInverted(false);
-
-        /*
-        motorController00.setInverted(true);
-        motorController03.setInverted(true);
-        */
     }
 
     @Override
@@ -144,8 +153,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
     @Override
     public void simulationPeriodic() {
-        // System.out.println("TankDriveSubsystm simulationPeriodic");
-        
+        /*
         // Set the inputs to the system. Note that we need to convert
         // the [-1, 1] PWM signal to voltage by multiplying it by the
         // robot controller voltage.
@@ -164,18 +172,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
         encoderSim01.setRate(m_driveSim.getLeftVelocityMetersPerSecond());
 
         gyroSim00.setAngle(-m_driveSim.getHeading().getDegrees());
-    }
-
-    /**
-     * testDrive()
-     * 
-     * This was to test if Joystick axis data to a motor
-     * 
-     * @param speed
-     */
-    public void testDrive(double speed) {
-        // talonMotorController.set(ControlMode.PercentOutput, speed);
-        motorController03.set(speed);
+        */
     }
 
     /**
@@ -189,8 +186,6 @@ public class DriveTrainSubsystem extends SubsystemBase {
      */
     public boolean tankDrive(double leftSpeed, double rightSpeed) {
         boolean status = true;
-
-        System.out.println("DriveTrainSubsystem tankDrive");
 
         m_drive.tankDrive(leftSpeed, rightSpeed);
 
@@ -208,8 +203,6 @@ public class DriveTrainSubsystem extends SubsystemBase {
      */
     public boolean arcadeDrive(double speed, double rotation) {
         boolean status = true;
-
-        System.out.println("DriveTrainSubsystem arcadeDrive");
 
         m_drive.arcadeDrive(speed, rotation);
 

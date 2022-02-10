@@ -28,6 +28,14 @@ public class ShooterSubsystem extends SubsystemBase {
     public void simulationPeriodic() {
     }    
 
+    /**
+     * fire()
+     * 
+     * Fire shooter.
+     * 
+     * @param speed
+     * @return
+     */
     public boolean fire(double speed) {
         boolean status = true;
 
@@ -36,6 +44,14 @@ public class ShooterSubsystem extends SubsystemBase {
         return status;
     }
 
+    /**
+     * clear()
+     * 
+     * Returns game piece from shooter to feeder
+     * 
+     * @param speed
+     * @return
+     */
     public boolean clear(double speed) {
         boolean status = true;
 
@@ -43,6 +59,14 @@ public class ShooterSubsystem extends SubsystemBase {
         return status;
     }
 
+    /**
+     * feedIn()
+     * 
+     * Feed game piece into the shooter motor.
+     * 
+     * @param speed
+     * @return
+     */
     public boolean feedIn(double speed) {
         boolean status = true;
 
@@ -51,6 +75,14 @@ public class ShooterSubsystem extends SubsystemBase {
         return status;
     }
 
+    /**
+     * feedOut()
+     * 
+     * Return game piece to the indexer/collector
+     * 
+     * @param speed
+     * @return
+     */
     public boolean feedOut(double speed) {
         boolean status = true;
 
@@ -59,6 +91,48 @@ public class ShooterSubsystem extends SubsystemBase {
         return status;
     }
 
+    /**
+     * stopShooter()
+     * 
+     * Stop shooter motor.
+     * 
+     * @return
+     */
+    public boolean stopShooter() {
+        boolean status = true;
+
+        talonMotorController.set(
+            ControlMode.PercentOutput,
+            Constants.stopMotor
+        );
+
+        return status;
+    }
+
+    /**
+     * stopFeeder()
+     * 
+     * Stop feeder motor.
+     * 
+     * @return
+     */
+    public boolean stopFeeder() {
+        boolean status = true;
+
+        victorMotorController.set(Constants.stopMotor);
+
+        return status;
+    }
+
+    /**
+     * shooter()
+     * 
+     * The fire and clear functions call this one with a forward or back direction.
+     * 
+     * @param speed
+     * @param direction
+     * @return
+     */
     private boolean shooter(double speed, int direction) {
         boolean status = true;
 
@@ -70,6 +144,15 @@ public class ShooterSubsystem extends SubsystemBase {
         return status;
     }
 
+    /**
+     * feed()
+     * 
+     * feedIn and feedOut functions call this one with a forward or back direction.
+     * 
+     * @param speed
+     * @param direction
+     * @return
+     */
     private boolean feed(double speed, int direction) {
         boolean status = true;
 

@@ -14,6 +14,8 @@ package frc.robot;
  */
 public final class Constants {
 
+    public final static double stopMotor = 0.0;
+
     public final class Robot {
         /*************************************
          * General Robot Constants
@@ -27,22 +29,32 @@ public final class Constants {
 
     }
 
+    public final class Collector {
+        public final static int collectorPort  = 5;
+        public final static int raiseLowerPort = 6;
+
+        public final static double collectorSpeed  = 0.5;
+        public final static double raiseLowerSpeed = 0.25;
+    }
+
     public final class DriveTrain {
         /***********************************************
          * Drive Train Type
          */
-        public final static int TANKDRIVE    = 1;   
-        public final static int MECANUMDRIVE = 2;   // X formation
-        public final static int OMNIDRIVE    = 3;   // 45 degree Omni-drive
-        public final static int SWERVEDRIVE  = 4;
+        public final static int tankDrive    = 1;   
+        public final static int mecanumDrive = 2;   // X formation
+        public final static int omniDrive    = 3;   // 45 degree Omni-drive
+        public final static int swerveDrive  = 4;
 
-        public final static int DRIVESELECTED = TANKDRIVE;
+        public final static int driveSelected = tankDrive;
 
         /*************************************
          * Drive Train Motor Controller ports
          */
         public final static int motorControllerPort00 = 0;
         public final static int motorControllerPort01 = 1;
+        public final static int motorControllerPort02 = 2;
+        public final static int motorControllerPort03 = 3;
 
         /*************************************
          * Drive Train Motor Controller CAN device Ids
@@ -84,6 +96,42 @@ public final class Constants {
         public final static double movementPerDegree03 = ( ( Robot.robotRadius / ( Robot.wheelRadius / 2 ) ) * encoder03PPR ) /360;
     }
 
+    public final class Joystick {
+        // Joystick Only Drive Station Ports
+        public final static int tankLeftPort    = 0;
+        public final static int tankRightPort   = 1;
+
+        // Joystick Only Drive Station Ports
+        public final static int secondDriverPort = 2;
+
+        // Controller Only Drive Stations 
+        public final static int firstControllerPort  = 4;
+        public final static int secondControllerPort = 5;
+
+        public final static int xboxControllerPort = 6;
+
+        public final static int ps4ControllerPort = 7;
+
+        // Joystick configuration
+        public final static int joysticks  = 1;
+        public final static int controllers = 2;
+
+        public final static int configuration = joysticks;
+
+        public final static int fireShooterBtn = 1;
+        public final static int feedShooterBtn = 2;
+
+        public final static int clearShooterBtn = 7;
+        public final static int clearFeederBtn  = 8;
+
+        public final static int raiseLowerCollectorBtn = 5;
+        public final static int collectorOnOffBtn      = 3;
+
+        public final static int clearCollectorBtn = 9;
+        public final static int clearIndexerBtn   = 10;
+
+    }
+
     public final class Sensors {
         /**********************************************
          * Gyroscopes
@@ -103,41 +151,11 @@ public final class Constants {
     public final class Shooter {
         public final static int talonMotorControllerId = 44;
         public final static int victorMotorControllerPort = 0;
-    }
 
-    public final class Joystick {
-        // Joystick Only Drive Station Ports
-        public final static int tankLeftPort    = 0;
-        public final static int tankRightPort   = 1;
+        public final static double closeShooterSpeed = 0.5;
+        public final static double midShooterSpeed   = 0.7;
+        public final static double farShooterSpeed   = 0.9;
 
-        // Joystick Only Drive Station Ports
-        public final static int secondDriverPort = 2;
-
-        // Controller Only Drive Stations 
-        public final static int firstControllerPort  = 4;
-        public final static int secondControllerPort = 5;
-
-        public final static int xboxControllerPort = 6;
-
-        public final static int ps4ControllerPort = 7;
-
-        // Joystick configuration
-        public final static int JOYSTICKS  = 1;
-        public final static int CONTROLLER = 2;
-
-        public final static int CONFIGURATION = JOYSTICKS;
-
-        public final static int FIRESHOOTERBTN = 1;
-        public final static int FEEDSHOOTERBTN = 2;
-
-        public final static int CLEARSHOOTERBTN = 7;
-        public final static int CLEARFEEDERBTN  = 8;
-
-        public final static int RAISELOWERCOLLECTOR = 5;
-        public final static int COLLECTORONOFF = 3;
-
-        public final static int CLEARCOLLECTOR = 9;
-        public final static int CLEARINDEXER   = 10;
-
+        public final static double feederSpeed = 0.5;
     }
 }

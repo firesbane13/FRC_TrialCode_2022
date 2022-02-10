@@ -6,13 +6,13 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
-import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.CollectorSubsystem;
 
-public class ShooterFeedOutCommand extends CommandBase {
-  private ShooterSubsystem m_shooter = new ShooterSubsystem();
+public class CollectorLowerCollectorCommand extends CommandBase {
+  private CollectorSubsystem m_collector = new CollectorSubsystem();
 
-  /** Creates a new ShooterFeedOutCommand. */
-  public ShooterFeedOutCommand() {
+  /** Creates a new CollectorLowerCollector. */
+  public CollectorLowerCollectorCommand() {
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -23,7 +23,12 @@ public class ShooterFeedOutCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_shooter.feedOut(Constants.Shooter.feederSpeed);
+    m_collector.lowerCollector(Constants.Collector.raiseLowerSpeed);
+
+    /**
+     * TODO
+     * Loop while limit switch isn't pressed.
+     */
   }
 
   // Called once the command ends or is interrupted.
@@ -33,6 +38,6 @@ public class ShooterFeedOutCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }
