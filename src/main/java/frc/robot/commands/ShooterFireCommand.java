@@ -4,13 +4,14 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
 
 public class ShooterFireCommand extends CommandBase {
-  ShooterSubsystem m_shooter = new ShooterSubsystem();
+  //ShooterSubsystem m_shooter = new ShooterSubsystem();
   VisionSubsystem m_vision = new VisionSubsystem();
 
   /** Creates a new ShooterCommand. */
@@ -26,6 +27,10 @@ public class ShooterFireCommand extends CommandBase {
   @Override
   public void execute() {
     double shooterSpeed = 0.0;
+    
+    SmartDashboard.putBoolean("Valid Target", m_vision.findTarget());
+    SmartDashboard.putNumber("X Loc", m_vision.getTargetHorizontal());
+
 
     // Only shoot when there's a valid target in range
     if (m_vision.findTarget() == true) {
@@ -47,7 +52,7 @@ public class ShooterFireCommand extends CommandBase {
         */
     }
 
-    m_shooter.fire(shooterSpeed);
+    //m_shooter.fire(shooterSpeed);
   }
 
   // Called once the command ends or is interrupted.
