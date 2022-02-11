@@ -28,7 +28,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final DriveTrainSubsystem driveTrainSubsystem = new DriveTrainSubsystem();
+  private  DriveTrainSubsystem driveTrainSubsystem = new DriveTrainSubsystem();
   private ShooterFireCommand fireCommand = new ShooterFireCommand();
   private ShooterStopShooterCommand stopShooterCommand = new ShooterStopShooterCommand();
 

@@ -77,12 +77,12 @@ public final class Constants {
         public final static int encoder01ChannelB = 3;
         public final static int encoder01PPR = sameDriveEncoder;
 
-        public final static int encoder02ChannelA = 2;
-        public final static int encoder02ChannelB = 3;
+        public final static int encoder02ChannelA = 4;
+        public final static int encoder02ChannelB = 5;
         public final static int encoder02PPR = sameDriveEncoder;
 
-        public final static int encoder03ChannelA = 2;
-        public final static int encoder03ChannelB = 3;
+        public final static int encoder03ChannelA = 6;
+        public final static int encoder03ChannelB = 7;
         public final static int encoder03PPR = sameDriveEncoder;
 
         public final static double movementInInches00 = ( encoder00PPR / ( Robot.wheelRadius * Math.PI ) );
@@ -150,11 +150,12 @@ public final class Constants {
 
     public final class Shooter {
         public final static int talonMotorControllerId = 44;
-        public final static int victorMotorControllerPort = 0;
+        public final static int victorMotorControllerPort = 4;
 
         public final static double closeShooterSpeed = 0.5;
         public final static double midShooterSpeed   = 0.7;
         public final static double farShooterSpeed   = 0.9;
+        public final static double clearShooterSpeed = 0.5;
 
         public final static double feederSpeed = 0.5;
     }

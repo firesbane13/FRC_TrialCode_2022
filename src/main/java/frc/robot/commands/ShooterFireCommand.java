@@ -12,7 +12,6 @@ import frc.robot.subsystems.VisionSubsystem;
 public class ShooterFireCommand extends CommandBase {
   ShooterSubsystem m_shooter = new ShooterSubsystem();
   VisionSubsystem m_vision = new VisionSubsystem();
-  DriveTrainSubsystem m_driveTrain = new DriveTrainSubsystem();
 
   /** Creates a new ShooterCommand. */
   public ShooterFireCommand() {
