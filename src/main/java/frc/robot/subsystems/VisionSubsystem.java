@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class VisionSubsystem extends SubsystemBase {
@@ -9,10 +10,9 @@ public class VisionSubsystem extends SubsystemBase {
     private final static Number LED_OFF     = 1;
     private final static Number LED_DEFAULT = 0;
 
-    private NetworkTable limelight = NetworkTableInstance.getDefault().getTable("limelight");
+    private NetworkTable limelight= NetworkTableInstance.getDefault().getTable("limelight");
 
     public VisionSubsystem() {
-
     }
 
     @Override
@@ -47,6 +47,9 @@ public class VisionSubsystem extends SubsystemBase {
      */
     public double getTargetHorizontal() {
         double horizontalValue = 0.0;
+
+        SmartDashboard.putNumber("r val:", limelight.getEntry("tx").getDouble(0));
+        System.out.println("getTargetHorizontal");
 
         horizontalValue = getHorizontal();
 
@@ -112,9 +115,17 @@ public class VisionSubsystem extends SubsystemBase {
      */
     private boolean isValidTarget() {
         boolean status = false;
+        int valid = 0;
 
-        status = limelight.getEntry("tv").getBoolean(false);
+        valid = limelight.getEntry("tv").getNumber(0).intValue();
 
+        // Need to convert valid target 0 or 1 to boolean
+        if (valid == 1) {
+            status = true;
+        }
+
+        SmartDashboard.putBoolean("Valid Target", status);
+        
         return status;
     }
 
@@ -128,6 +139,7 @@ public class VisionSubsystem extends SubsystemBase {
             horizontalValue = limelight.getEntry("tx").getDouble(0.0);
         }
 
+        System.out.println("getHorizontal: " + horizontalValue);
         return horizontalValue;
     }
 
@@ -145,7 +157,7 @@ public class VisionSubsystem extends SubsystemBase {
          * Only get vertical value if there's a valid target
          */
         if (isValidTarget()) {
-            verticalValue = limelight.getEntry("ty").getDouble(0.0);
+            verticalValue = limelight.getEntry("ty").getDouble(0);
         }
 
         return verticalValue;
