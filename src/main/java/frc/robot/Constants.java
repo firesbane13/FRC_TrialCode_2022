@@ -77,12 +77,12 @@ public final class Constants {
         public final static int encoder01ChannelB = 3;
         public final static int encoder01PPR = sameDriveEncoder;
 
-        public final static int encoder02ChannelA = 2;
-        public final static int encoder02ChannelB = 3;
+        public final static int encoder02ChannelA = 4;
+        public final static int encoder02ChannelB = 5;
         public final static int encoder02PPR = sameDriveEncoder;
 
-        public final static int encoder03ChannelA = 2;
-        public final static int encoder03ChannelB = 3;
+        public final static int encoder03ChannelA = 6;
+        public final static int encoder03ChannelB = 7;
         public final static int encoder03PPR = sameDriveEncoder;
 
         public final static double movementInInches00 = ( encoder00PPR / ( Robot.wheelRadius * Math.PI ) );
