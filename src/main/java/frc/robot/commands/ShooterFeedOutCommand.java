@@ -9,11 +9,12 @@ import frc.robot.Constants;
 import frc.robot.subsystems.ShooterSubsystem;
 
 public class ShooterFeedOutCommand extends CommandBase {
-  private ShooterSubsystem m_shooter = new ShooterSubsystem();
+  private ShooterSubsystem m_shooter;
 
   /** Creates a new ShooterFeedOutCommand. */
-  public ShooterFeedOutCommand() {
+  public ShooterFeedOutCommand(ShooterSubsystem shooterSubsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
+    m_shooter = shooterSubsystem;
   }
 
   // Called when the command is initially scheduled.

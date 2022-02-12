@@ -8,11 +8,12 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ShooterSubsystem;
 
 public class ShooterStopFeederCommand extends CommandBase {
-  ShooterSubsystem m_shooter = new ShooterSubsystem();
+  ShooterSubsystem m_shooter;
 
   /** Creates a new ShooterStopFeederCommand. */
-  public ShooterStopFeederCommand() {
+  public ShooterStopFeederCommand(ShooterSubsystem shooterSubsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
+    m_shooter = shooterSubsystem;
   }
 
   // Called when the command is initially scheduled.

@@ -11,12 +11,18 @@ import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
 
 public class ShooterFireCommand extends CommandBase {
-  //ShooterSubsystem m_shooter = new ShooterSubsystem();
-  VisionSubsystem m_vision = new VisionSubsystem();
+  private ShooterSubsystem m_shooter;
+  private VisionSubsystem m_vision;
+  private DriveTrainSubsystem m_driveTrain;
 
   /** Creates a new ShooterCommand. */
-  public ShooterFireCommand() {
+  public ShooterFireCommand(
+    ShooterSubsystem shooterSubsystem,
+    DriveTrainSubsystem driveTrainSubsystem,
+    VisionSubsystem visionSubsystem
+  ) {
     // Use addRequirements() here to declare subsystem dependencies.
+
   }
 
   // Called when the command is initially scheduled.
@@ -52,7 +58,7 @@ public class ShooterFireCommand extends CommandBase {
         */
     }
 
-    //m_shooter.fire(shooterSpeed);
+    m_shooter.fire(shooterSpeed);
   }
 
   // Called once the command ends or is interrupted.
