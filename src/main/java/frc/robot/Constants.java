@@ -129,7 +129,15 @@ public final class Constants {
 
         public final static int clearCollectorBtn = 9;
         public final static int clearIndexerBtn   = 10;
+    }
 
+    public final class Limelight {
+        // distance = (heightOfTarget - heightOfLimelight) / tan(angleOfLimeLight + angleOfTargetFromLLCenter)
+        public final static double heightOfLimelight = 24.0;
+        public final static double heightOfTarget    = 102.0;
+        public final static double calculatedHeight  = heightOfTarget - heightOfLimelight;
+        
+        public final static double angleOfLimelight  = 45.0;
     }
 
     public final class Sensors {
