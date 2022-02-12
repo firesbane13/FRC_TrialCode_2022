@@ -6,6 +6,7 @@ package frc.robot.commands;
 
 import javax.lang.model.util.ElementScanner6;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.DriveTrainSubsystem;
@@ -41,7 +42,7 @@ public class ShooterFireCommand extends CommandBase {
 
     // Only shoot when there's a valid target in range
     if (m_vision.findTarget() == true) {
-      m_vision.ledToggle();
+      // m_vision.ledToggle();
 
       /**
        * Align robot to target
@@ -71,13 +72,13 @@ public class ShooterFireCommand extends CommandBase {
     double targetX = 0.0;
     double targetTurnSpeed = 0.0;
     
+    System.out.println()
     // Turn towards target until near centered
-    while ( ( targetX = m_vision.getTargetHorizontal() ) < 0.05 ) { 
+    targetX = m_vision.getTargetHorizontal(); 
       // Convert radians to power based on a K value
       targetTurnSpeed = targetX * STEER_K;
 
       m_driveTrain.tankDrive(targetTurnSpeed, -targetTurnSpeed);
-    }
   }
 
   public void moveToClosestRange() {
