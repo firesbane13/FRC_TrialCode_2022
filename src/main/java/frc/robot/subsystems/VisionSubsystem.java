@@ -37,7 +37,7 @@ public class VisionSubsystem extends SubsystemBase {
 
         status = isValidTarget();
 
-        SmartDashboard.putBoolean("findTarget", status);
+        SmartDashboard.putBoolean("Target Found", status);
 
         return status;
     }
@@ -54,6 +54,8 @@ public class VisionSubsystem extends SubsystemBase {
 
         horizontalValue = getHorizontal();
 
+        SmartDashboard.putNumber("Target's Horizontal", horizontalValue);
+
         return horizontalValue;
     }
 
@@ -69,7 +71,26 @@ public class VisionSubsystem extends SubsystemBase {
 
         verticalValue = getVertical();
 
+        SmartDashboard.putNumber("Target's Vertical", verticalValue);
+
         return verticalValue;
+    }
+
+    /**
+     * getTargetArea()
+     * 
+     * Returns the area size of the target in the Limelight's view.
+     * 
+     * @return
+     */
+    public double getTargetArea() {
+        double targetArea = 0.0;
+
+        targetArea = getArea();
+
+        SmartDashboard.putNumber("Target's Area", targetArea);
+
+        return targetArea;
     }
 
     /**
@@ -82,12 +103,17 @@ public class VisionSubsystem extends SubsystemBase {
     public boolean ledToggle() {
         boolean status     = false;
         Number currentMode = limelight.getEntry("ledMode").getNumber(-1);
+        String currentState = "Off";
 
         if (currentMode == LED_ON) {
             status = ledOff();
+            currentState = "Off";
         } else if (currentMode == LED_OFF) {
             status = ledOn();
+            currentState = "On";
         }
+
+        SmartDashboard.putString("LL LED State", currentState);
 
         return status;
     }
@@ -136,10 +162,7 @@ public class VisionSubsystem extends SubsystemBase {
          */
         if (isValidTarget()) {
             horizontalValue = limelight.getEntry("tx").getDouble(0.0);
-            horizontalValue = horizontalValue / 30;
         }
-
-        SmartDashboard.putNumber("x value: ", horizontalValue);
 
         return horizontalValue;
     }
@@ -158,10 +181,27 @@ public class VisionSubsystem extends SubsystemBase {
          * Only get vertical value if there's a valid target
          */
         if (isValidTarget()) {
-            verticalValue = limelight.getEntry("ty").getDouble(0);
+            verticalValue = limelight.getEntry("ty").getDouble(0.0);
         }
 
         return verticalValue;
+    }
+
+    /**
+     * getArea()
+     * 
+     * Get target's area from the limelight's view
+     * 
+     * @return
+     */
+    private double getArea() {
+        double areaValue = 0.0;
+
+        if (isValidTarget()) {
+            areaValue = limelight.getEntry("ta").getDouble(0.0);
+        }
+
+        return areaValue;
     }
 
     /**

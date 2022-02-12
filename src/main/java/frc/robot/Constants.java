@@ -20,20 +20,21 @@ public final class Constants {
         /*************************************
          * General Robot Constants
          */
+        public final static double wheelRadius       = 8;       // The robot uses 8" radius wheels.
+        public final static double robotRadius       = 48;      // Robot radius in inches.
+
         public final static double driveGearRatio    = 7.29;    // 7.29:1 gearing reduction.
         public final static double movementOfInertia = 7.5;     // MOI of 7.5 kg m^2 (from CAD model).
         public final static double massOfRobot       = 60.0;    // The mass of the robot is 60 kg.
-        public final static double wheelRadius       = 8;       // The robot uses 8" radius wheels.
         public final static double trackWidth        = 28;      // The track width is 0.7112 meters.
-        public final static double robotRadius       = 48;      // Robot radius in inches.
 
     }
 
     public final class Collector {
         public final static int collectorPort  = 5;
-        public final static int raiseLowerPort = 6;
-
         public final static double collectorSpeed  = 0.5;
+
+        public final static int raiseLowerPort = 6;
         public final static double raiseLowerSpeed = 0.25;
     }
 
