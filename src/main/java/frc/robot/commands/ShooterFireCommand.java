@@ -33,10 +33,6 @@ public class ShooterFireCommand extends CommandBase {
   @Override
   public void execute() {
     double shooterSpeed = 0.0;
-    
-    SmartDashboard.putBoolean("Valid Target", m_vision.findTarget());
-    SmartDashboard.putNumber("X Loc", m_vision.getTargetHorizontal());
-
 
     // Only shoot when there's a valid target in range
     if (m_vision.findTarget() == true) {

@@ -4,6 +4,7 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 public class VisionSubsystem extends SubsystemBase {
     private final static Number LED_ON      = 3;
@@ -13,6 +14,7 @@ public class VisionSubsystem extends SubsystemBase {
     private NetworkTable limelight= NetworkTableInstance.getDefault().getTable("limelight");
 
     public VisionSubsystem() {
+        ledOff();
     }
 
     @Override
@@ -191,5 +193,16 @@ public class VisionSubsystem extends SubsystemBase {
         limelight.getEntry("ledMode").setNumber(LED_OFF);
 
         return status;
+    }
+
+    private double calculateDistance(double angleFromCenter) {
+        double distance = 0.0;
+        double adjustedAngle = 0.0;
+
+        adjustedAngle  = angleFromCenter + Constants.Limelight.angleOfLimelight;
+
+        distance = Constants.Limelight.calculatedHeight / Math.tan(adjustedAngle);
+
+        return distance;
     }
 }
