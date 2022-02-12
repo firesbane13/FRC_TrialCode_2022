@@ -9,11 +9,12 @@ import frc.robot.Constants;
 import frc.robot.subsystems.ShooterSubsystem;
 
 public class ShooterClearCommand extends CommandBase {
-  private ShooterSubsystem m_shooter = new ShooterSubsystem();
+  private ShooterSubsystem m_shooter;
 
   /** Creates a new ShooterClearCommand. */
-  public ShooterClearCommand() {
+  public ShooterClearCommand(ShooterSubsystem shooterSubsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
+    m_shooter = shooterSubsystem;
   }
 
   // Called when the command is initially scheduled.

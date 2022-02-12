@@ -2,7 +2,9 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 public class VisionSubsystem extends SubsystemBase {
     private final static Number LED_ON      = 3;
@@ -12,7 +14,7 @@ public class VisionSubsystem extends SubsystemBase {
     private NetworkTable limelight = NetworkTableInstance.getDefault().getTable("limelight");
 
     public VisionSubsystem() {
-
+        ledOff();
     }
 
     @Override
@@ -35,6 +37,8 @@ public class VisionSubsystem extends SubsystemBase {
 
         status = isValidTarget();
 
+        SmartDashboard.putBoolean("Target Found", status);
+
         return status;
     }
 
@@ -49,6 +53,8 @@ public class VisionSubsystem extends SubsystemBase {
         double horizontalValue = 0.0;
 
         horizontalValue = getHorizontal();
+
+        SmartDashboard.putNumber("Target's Horizontal", horizontalValue);
 
         return horizontalValue;
     }
@@ -65,7 +71,26 @@ public class VisionSubsystem extends SubsystemBase {
 
         verticalValue = getVertical();
 
+        SmartDashboard.putNumber("Target's Vertical", verticalValue);
+
         return verticalValue;
+    }
+
+    /**
+     * getTargetArea()
+     * 
+     * Returns the area size of the target in the Limelight's view.
+     * 
+     * @return
+     */
+    public double getTargetArea() {
+        double targetArea = 0.0;
+
+        targetArea = getArea();
+
+        SmartDashboard.putNumber("Target's Area", targetArea);
+
+        return targetArea;
     }
 
     /**
@@ -78,12 +103,17 @@ public class VisionSubsystem extends SubsystemBase {
     public boolean ledToggle() {
         boolean status     = false;
         Number currentMode = limelight.getEntry("ledMode").getNumber(-1);
+        String currentState = "Off";
 
         if (currentMode == LED_ON) {
             status = ledOff();
+            currentState = "Off";
         } else if (currentMode == LED_OFF) {
             status = ledOn();
+            currentState = "On";
         }
+
+        SmartDashboard.putString("LL LED State", currentState);
 
         return status;
     }
@@ -112,9 +142,15 @@ public class VisionSubsystem extends SubsystemBase {
      */
     private boolean isValidTarget() {
         boolean status = false;
+        int valid = 0;
 
-        status = limelight.getEntry("tv").getBoolean(false);
+        valid = limelight.getEntry("tv").getNumber(0).intValue();
 
+        // Need to convert valid target 0 or 1 to boolean
+        if (valid == 1) {
+            status = true;
+        }
+        
         return status;
     }
 
@@ -152,6 +188,23 @@ public class VisionSubsystem extends SubsystemBase {
     }
 
     /**
+     * getArea()
+     * 
+     * Get target's area from the limelight's view
+     * 
+     * @return
+     */
+    private double getArea() {
+        double areaValue = 0.0;
+
+        if (isValidTarget()) {
+            areaValue = limelight.getEntry("ta").getDouble(0.0);
+        }
+
+        return areaValue;
+    }
+
+    /**
      * ledOn()
      * 
      * Turn Limelight LED on
@@ -179,5 +232,16 @@ public class VisionSubsystem extends SubsystemBase {
         limelight.getEntry("ledMode").setNumber(LED_OFF);
 
         return status;
+    }
+
+    private double calculateDistance(double angleFromCenter) {
+        double distance = 0.0;
+        double adjustedAngle = 0.0;
+
+        adjustedAngle  = angleFromCenter + Constants.Limelight.angleOfLimelight;
+
+        distance = Constants.Limelight.calculatedHeight / Math.tan(adjustedAngle);
+
+        return distance;
     }
 }

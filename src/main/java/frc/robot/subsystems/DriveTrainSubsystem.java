@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.simulation.AnalogGyroSim;
 import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim;
 import edu.wpi.first.wpilibj.simulation.EncoderSim;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DriveTrainSubsystem extends SubsystemBase {
     public final static int RIGHT = 1;
@@ -186,6 +187,9 @@ public class DriveTrainSubsystem extends SubsystemBase {
      */
     public boolean tankDrive(double leftSpeed, double rightSpeed) {
         boolean status = true;
+
+        SmartDashboard.putNumber("leftSpeed", leftSpeed);
+        SmartDashboard.putNumber("rightSpeed", rightSpeed);
 
         m_drive.tankDrive(leftSpeed, rightSpeed);
 

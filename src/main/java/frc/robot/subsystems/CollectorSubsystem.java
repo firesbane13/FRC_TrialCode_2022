@@ -13,7 +13,8 @@ public class CollectorSubsystem extends SubsystemBase {
     private final static int RAISE = 1;
     private final static int LOWER = -1;
 
-    private MotorController victorSpMotorController = new VictorSP(Constants.Collector.raiseLowerPort);
+    private MotorController victorSpRaiseLowerMC = new VictorSP(Constants.Collector.raiseLowerPort);
+    private MotorController victorSpCollectorMC = new VictorSP(Constants.Collector.collectorPort);
 
     public CollectorSubsystem() {
     }
@@ -118,7 +119,7 @@ public class CollectorSubsystem extends SubsystemBase {
     private boolean collectorPosition(double speed, int direction) {
         boolean status = false;
 
-        victorSpMotorController.set(Constants.Collector.raiseLowerSpeed);
+        victorSpRaiseLowerMC.set(Constants.Collector.raiseLowerSpeed);
 
         return status;
     }

@@ -9,11 +9,12 @@ import frc.robot.Constants;
 import frc.robot.subsystems.CollectorSubsystem;
 
 public class CollectorLowerCollectorCommand extends CommandBase {
-  private CollectorSubsystem m_collector = new CollectorSubsystem();
+  private CollectorSubsystem m_collector;
 
   /** Creates a new CollectorLowerCollector. */
-  public CollectorLowerCollectorCommand() {
+  public CollectorLowerCollectorCommand(CollectorSubsystem collectorSubsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
+    m_collector = collectorSubsystem;
   }
 
   // Called when the command is initially scheduled.
