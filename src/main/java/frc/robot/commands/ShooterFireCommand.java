@@ -72,11 +72,20 @@ public class ShooterFireCommand extends CommandBase {
     double targetX = 0.0;
     double targetTurnSpeed = 0.0;
     
-    System.out.println()
     // Turn towards target until near centered
     targetX = m_vision.getTargetHorizontal(); 
       // Convert radians to power based on a K value
-      targetTurnSpeed = targetX * STEER_K;
+      // targetTurnSpeed = targetX * STEER_K;
+      targetTurnSpeed = targetX / 30;
+
+      if (targetTurnSpeed < 0.40 
+        && (
+          targetX > 2.0
+          || targetX < -2.0
+        )
+      ) {
+        targetTurnSpeed = 0.40;
+      }
 
       m_driveTrain.tankDrive(targetTurnSpeed, -targetTurnSpeed);
   }
