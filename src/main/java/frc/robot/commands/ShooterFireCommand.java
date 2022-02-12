@@ -4,8 +4,8 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
@@ -22,7 +22,9 @@ public class ShooterFireCommand extends CommandBase {
     VisionSubsystem visionSubsystem
   ) {
     // Use addRequirements() here to declare subsystem dependencies.
-
+    m_shooter = shooterSubsystem;
+    m_driveTrain = driveTrainSubsystem;
+    m_vision = visionSubsystem;
   }
 
   // Called when the command is initially scheduled.
@@ -33,13 +35,19 @@ public class ShooterFireCommand extends CommandBase {
   @Override
   public void execute() {
     double shooterSpeed = 0.0;
+    double targetX = 0.0;
 
     // Only shoot when there's a valid target in range
     if (m_vision.findTarget() == true) {
+      m_vision.ledToggle();
+
       /**
        * TODO
        * Align robot to target
        */
+      targetX = m_vision.getTargetHorizontal();
+
+      m_driveTrain.tankDrive(targetX, -targetX);
 
        /**
         * TODO

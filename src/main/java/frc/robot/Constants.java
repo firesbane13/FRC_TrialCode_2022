@@ -166,5 +166,7 @@ public final class Constants {
         public final static double clearShooterSpeed = 0.5;
 
         public final static double feederSpeed = 0.5;
+
+        public final static double adjustmentSpeed = 0.25;
     }
 }

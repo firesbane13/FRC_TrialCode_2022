@@ -11,7 +11,7 @@ public class VisionSubsystem extends SubsystemBase {
     private final static Number LED_OFF     = 1;
     private final static Number LED_DEFAULT = 0;
 
-    private NetworkTable limelight= NetworkTableInstance.getDefault().getTable("limelight");
+    private NetworkTable limelight = NetworkTableInstance.getDefault().getTable("limelight");
 
     public VisionSubsystem() {
         ledOff();
@@ -37,6 +37,8 @@ public class VisionSubsystem extends SubsystemBase {
 
         status = isValidTarget();
 
+        SmartDashboard.putBoolean("findTarget", status);
+
         return status;
     }
 
@@ -49,9 +51,6 @@ public class VisionSubsystem extends SubsystemBase {
      */
     public double getTargetHorizontal() {
         double horizontalValue = 0.0;
-
-        SmartDashboard.putNumber("r val:", limelight.getEntry("tx").getDouble(0));
-        System.out.println("getTargetHorizontal");
 
         horizontalValue = getHorizontal();
 
@@ -125,8 +124,6 @@ public class VisionSubsystem extends SubsystemBase {
         if (valid == 1) {
             status = true;
         }
-
-        SmartDashboard.putBoolean("Valid Target", status);
         
         return status;
     }
@@ -139,9 +136,11 @@ public class VisionSubsystem extends SubsystemBase {
          */
         if (isValidTarget()) {
             horizontalValue = limelight.getEntry("tx").getDouble(0.0);
+            horizontalValue = horizontalValue / 30;
         }
 
-        System.out.println("getHorizontal: " + horizontalValue);
+        SmartDashboard.putNumber("x value: ", horizontalValue);
+
         return horizontalValue;
     }
 
