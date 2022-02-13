@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import javax.lang.model.util.ElementScanner6;
+import javax.swing.text.html.HTML.Tag;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
@@ -65,19 +66,21 @@ public class ShooterFireCommand extends CommandBase {
   }
 
   public void turnTowardsTarget() {
-    // How hard to turn towards target.   This value is based on the PID concept.
-    final double STEER_K = 0.03;
+    final double MINSPEED = 0.35;
+    final double MAXSPEED = 1.00;
 
     double targetX = 0.0;
     double targetTurnSpeed = 0.0;
     
-    // Turn towards target until near centered
-    while ( ( targetX = m_vision.getTargetHorizontal() ) < 0.05 ) { 
-      // Convert radians to power based on a K value
-      targetTurnSpeed = targetX * STEER_K;
+    // Convert radians to power based on a K value
+    targetTurnSpeed = targetX / 30;
 
-      m_driveTrain.tankDrive(targetTurnSpeed, -targetTurnSpeed);
-    }
+    /**
+     * Turn speed + (difference from max * minimum speed)
+     */
+    targetTurnSpeed = targetTurnSpeed + ((1 - targetTurnSpeed) * MINSPEED);
+    
+    m_driveTrain.tankDrive(targetTurnSpeed, -targetTurnSpeed);
   }
 
   public void moveToClosestRange() {
@@ -122,15 +125,6 @@ public class ShooterFireCommand extends CommandBase {
     } else {
       selectedRange = FAR;
     }
-
-    /**
-     * Work in progress
-     */
-    /*
-    while ( (targetArea = m_vision.getTargetArea()) {
-      m_driveTrain.tankDrive(leftSpeed, rightSpeed);
-    }
-    */
   }
 
   // Called once the command ends or is interrupted.

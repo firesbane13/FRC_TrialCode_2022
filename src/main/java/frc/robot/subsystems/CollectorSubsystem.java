@@ -1,20 +1,28 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 import edu.wpi.first.wpilibj.motorcontrol.VictorSP;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class CollectorSubsystem extends SubsystemBase {
-
+    // Used to determine direction.  Does the motor take game pieces in or spit them out
     private final static int IN  = 1;
     private final static int OUT = -1;
     
+    // Used to determine direction.  Does the motor raise or lower the collector
     private final static int RAISE = 1;
     private final static int LOWER = -1;
 
+    // Raise or Lower motor controller
     private MotorController victorSpRaiseLowerMC = new VictorSP(Constants.Collector.raiseLowerPort);
+ 
+    // Collect or uncollect game pieces motor controller.
     private MotorController victorSpCollectorMC = new VictorSP(Constants.Collector.collectorPort);
+
+    DigitalInput toplimitSwitch = new DigitalInput(Constants.Collector.toplimitSwitchPort);
+    DigitalInput bottomLimitSwitch = new DigitalInput(Constants.Collector.bottomLimitSwitchPort);
 
     public CollectorSubsystem() {
     }
@@ -71,7 +79,12 @@ public class CollectorSubsystem extends SubsystemBase {
     public boolean raiseCollector(double speed) {
         boolean status = false;
 
-        status = collectorPosition(speed, RAISE);
+        /**
+         * As long as the top limit switch isn't triggered run the motor.
+         */
+        if (toplimitSwitch.get() == false) {
+            status = collectorPosition(speed, RAISE);
+        }
 
         return status;
     }
@@ -87,9 +100,44 @@ public class CollectorSubsystem extends SubsystemBase {
     public boolean lowerCollector(double speed) {
         boolean status = false;
 
-        status = collectorPosition(speed, LOWER);
+        /**
+         * As long as the bottom limit switch isn't triggered run the motor.
+         */
+        if (bottomLimitSwitch.get() == false) {
+            status = collectorPosition(speed, LOWER);
+        }
 
         return status;
+    }
+
+    /**
+     * getBottomLimitSwitchState()
+     * 
+     * Used in the lower collector command isFinished() function
+     * 
+     * @return
+     */
+    public boolean getBottomLimitSwitchState() {
+        return bottomLimitSwitch.get();
+    }
+
+    /**
+     * getTopLimitSwitchState()
+     * 
+     * Used in the raise collector command isFinished() function
+     * @return
+     */
+    public boolean getTopLimitSwitchState() {
+        return toplimitSwitch.get();
+    }
+
+    /**
+     * stopRaiseLower()
+     * 
+     * Stop raise/lower motor when 
+     */
+    public void stopRaiseLower() {
+        victorSpRaiseLowerMC.set(Constants.stopMotor);
     }
 
     /**
@@ -98,11 +146,13 @@ public class CollectorSubsystem extends SubsystemBase {
      * intakeIn and intakeOut call this function with a direction
      * 
      * @param speed
-     * @param direction
+     * @param direction // take in or spit out
      * @return
      */
     private boolean intake(double speed, int direction) {
         boolean status = false;
+
+        victorSpCollectorMC.set(speed * direction);
 
         return status;
     }
@@ -113,13 +163,13 @@ public class CollectorSubsystem extends SubsystemBase {
      * raiseCollector and lowerCollector call this function with a direction
      * 
      * @param speed
-     * @param direction
+     * @param direction  // take in or spit out
      * @return
      */
     private boolean collectorPosition(double speed, int direction) {
-        boolean status = false;
+        boolean status = true;
 
-        victorSpRaiseLowerMC.set(Constants.Collector.raiseLowerSpeed);
+        victorSpRaiseLowerMC.set(speed * direction);
 
         return status;
     }

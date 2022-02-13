@@ -35,13 +35,13 @@ public class DriveTrainSubsystem extends SubsystemBase {
      * of the robot.   THe MotorControllerGroups below group the motor controllers
      * for each side together.
      */
-    
+    /*
     public MotorController motorController00 = new Spark(Constants.DriveTrain.motorControllerPort00);
     public MotorController motorController01 = new Spark(Constants.DriveTrain.motorControllerPort01);
     public MotorController motorController02 = new Spark(Constants.DriveTrain.motorControllerPort02);
     public MotorController motorController03 = new Spark(Constants.DriveTrain.motorControllerPort03);
+    */
     
-    /*
     public MotorController motorController00 = new CANSparkMax(
         Constants.DriveTrain.canMotorDeviceId01,
         MotorType.kBrushless
@@ -61,7 +61,6 @@ public class DriveTrainSubsystem extends SubsystemBase {
         Constants.DriveTrain.canMotorDeviceId04, 
         MotorType.kBrushless
     );
-    */
 
     private MotorControllerGroup leftMotors = new MotorControllerGroup(
         this.motorController00,
@@ -102,22 +101,17 @@ public class DriveTrainSubsystem extends SubsystemBase {
         Constants.DriveTrain.encoder03ChannelB
     );
 
-    /*
     private EncoderSim encoderSim00 = new EncoderSim(this.encoder00);
     private EncoderSim encoderSim01 = new EncoderSim(this.encoder01);
-    */
 
     // Mostly used for simulation
-    /*
     private AnalogGyro gyro00 = new AnalogGyro(Constants.Sensors.gyro00Port00);
     
     private AnalogGyroSim gyroSim00 = new AnalogGyroSim(this.gyro00);
-    */
 
     DifferentialDrive m_drive = new DifferentialDrive(leftMotors, rightMotors);
     
     // Create the simulation model of our drivetrain.
-    /*
     DifferentialDrivetrainSim m_driveSim = new DifferentialDrivetrainSim(
         DCMotor.getNEO(Constants.Simulation.driveTrainNeosPerSide),    // 2 NEO motors on each side of the drivetrain.
         Constants.Robot.driveGearRatio,       // 7.29:1 gearing reduction.
@@ -132,7 +126,6 @@ public class DriveTrainSubsystem extends SubsystemBase {
         // l and r velocity: 0.1   m/s
         // l and r pzzosition: 0.005 m
         VecBuilder.fill(0.001, 0.001, 0.001, 0.1, 0.1, 0.005, 0.005));
-    */
 
     /** Creates a new TankDriveSubsystem Object */
     public DriveTrainSubsystem() {
@@ -154,7 +147,6 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
     @Override
     public void simulationPeriodic() {
-        /*
         // Set the inputs to the system. Note that we need to convert
         // the [-1, 1] PWM signal to voltage by multiplying it by the
         // robot controller voltage.
@@ -173,7 +165,6 @@ public class DriveTrainSubsystem extends SubsystemBase {
         encoderSim01.setRate(m_driveSim.getLeftVelocityMetersPerSecond());
 
         gyroSim00.setAngle(-m_driveSim.getHeading().getDegrees());
-        */
     }
 
     /**
