@@ -65,7 +65,6 @@ public class RobotContainer {
   public JoystickButton fireBtn        = new JoystickButton(joystick02, Constants.Joystick.fireShooterBtn);
   public JoystickButton feedShooterBtn = new JoystickButton(joystick02, Constants.Joystick.feedShooterBtn);
 
-  /*
   public JoystickButton clearShooterBtn = new JoystickButton(joystick02, Constants.Joystick.clearShooterBtn);
   public JoystickButton clearFeederBtn  = new JoystickButton(joystick02, Constants.Joystick.clearFeederBtn);
 
@@ -74,7 +73,6 @@ public class RobotContainer {
 
   public JoystickButton clearCollectorBtn = new JoystickButton(joystick02, Constants.Joystick.clearCollectorBtn);
   public JoystickButton clearIndexerBtn   = new JoystickButton(joystick02, Constants.Joystick.clearIndexerBtn);
-  */
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -102,13 +100,12 @@ public class RobotContainer {
         
     fireBtn.whileHeld(fireCommand);
     fireBtn.whenReleased(stopShooterCommand);
-    /*
+
     feedShooterBtn.whenPressed(feedInCommand);
     feedShooterBtn.whenReleased(stopFeederCommand);
 
     clearFeederBtn.whenPressed(feedOutCommand);
     clearFeederBtn.whenReleased(stopFeederCommand);
-    */
   }
 
   /**

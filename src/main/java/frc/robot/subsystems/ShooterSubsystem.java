@@ -15,7 +15,7 @@ public class ShooterSubsystem extends SubsystemBase {
     private static final int FEEDOUT = -1;
 
     private TalonFX talonMotorController = new TalonFX(Constants.Shooter.talonMotorControllerId);
-    //  private VictorSP victorMotorController = new VictorSP(Constants.Shooter.victorMotorControllerPort);
+    private VictorSP victorMotorController = new VictorSP(Constants.Shooter.victorMotorControllerPort);
 
     public ShooterSubsystem() {
     }
@@ -119,7 +119,7 @@ public class ShooterSubsystem extends SubsystemBase {
     public boolean stopFeeder() {
         boolean status = true;
 
-        // victorMotorController.set(Constants.stopMotor);
+        victorMotorController.set(Constants.stopMotor);
 
         return status;
     }
@@ -156,7 +156,7 @@ public class ShooterSubsystem extends SubsystemBase {
     private boolean feed(double speed, int direction) {
         boolean status = true;
 
-        // victorMotorController.set(speed * direction);
+        victorMotorController.set(speed * direction);
 
         return status;
     }

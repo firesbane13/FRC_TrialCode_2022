@@ -25,11 +25,6 @@ public class CollectorRaiseCollectorCommand extends CommandBase {
   @Override
   public void execute() {
     m_collector.raiseCollector(Constants.Collector.raiseLowerSpeed);
-
-    /**
-     * TODO
-     * While limit switch is not pressed run motor
-     */
   }
 
   // Called once the command ends or is interrupted.
@@ -39,6 +34,14 @@ public class CollectorRaiseCollectorCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    boolean status = m_collector.getTopLimitSwitchState();
+
+    // Stop motor when limit switch pressed
+    if (status) {
+      m_collector.stopRaiseLower();
+    }
+
+    // Finish when touching limit switch.
+    return status;
   }
 }
