@@ -25,11 +25,6 @@ public class CollectorLowerCollectorCommand extends CommandBase {
   @Override
   public void execute() {
     m_collector.lowerCollector(Constants.Collector.raiseLowerSpeed);
-
-    /**
-     * TODO
-     * Loop while limit switch isn't pressed.
-     */
   }
 
   // Called once the command ends or is interrupted.
@@ -39,6 +34,12 @@ public class CollectorLowerCollectorCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return true;
+    boolean status = m_collector.getBottomLimitSwitchState();
+
+    if (status) {
+      m_collector.stopRaiseLower();
+    }
+    return status;
+
   }
 }

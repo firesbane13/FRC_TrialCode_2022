@@ -36,6 +36,9 @@ public final class Constants {
 
         public final static int raiseLowerPort = 6;
         public final static double raiseLowerSpeed = 0.25;
+
+        public final static int toplimitSwitchPort = 8;
+        public final static int bottomLimitSwitchPort = 9;
     }
 
     public final class DriveTrain {
@@ -51,6 +54,7 @@ public final class Constants {
 
         /*************************************
          * Drive Train Motor Controller ports
+         * Right now, Cannon bot only.
          */
         public final static int motorControllerPort00 = 0;
         public final static int motorControllerPort01 = 1;
