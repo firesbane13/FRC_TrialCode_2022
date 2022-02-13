@@ -62,7 +62,7 @@ public class RobotContainer {
   public Joystick controller00 = new Joystick(Constants.Joystick.firstControllerPort);
   public Joystick controller01 = new Joystick(Constants.Joystick.secondControllerPort);
 
-  public JoystickButton fireBtn        = new JoystickButton(joystick00, Constants.Joystick.fireShooterBtn);
+  public JoystickButton fireBtn        = new JoystickButton(joystick02, Constants.Joystick.fireShooterBtn);
   public JoystickButton feedShooterBtn = new JoystickButton(joystick02, Constants.Joystick.feedShooterBtn);
 
   public JoystickButton clearShooterBtn = new JoystickButton(joystick02, Constants.Joystick.clearShooterBtn);

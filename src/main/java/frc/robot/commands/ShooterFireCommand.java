@@ -7,6 +7,7 @@ package frc.robot.commands;
 import javax.lang.model.util.ElementScanner6;
 import javax.swing.text.html.HTML.Tag;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.DriveTrainSubsystem;
@@ -42,7 +43,7 @@ public class ShooterFireCommand extends CommandBase {
 
     // Only shoot when there's a valid target in range
     if (m_vision.findTarget() == true) {
-      m_vision.ledToggle();
+      // m_vision.ledToggle();
 
       /**
        * Align robot to target

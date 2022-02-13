@@ -14,7 +14,7 @@ public class VisionSubsystem extends SubsystemBase {
     private NetworkTable limelight = NetworkTableInstance.getDefault().getTable("limelight");
 
     public VisionSubsystem() {
-        ledOff();
+        // ledOff();
     }
 
     @Override
