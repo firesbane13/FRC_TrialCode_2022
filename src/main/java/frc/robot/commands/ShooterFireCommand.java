@@ -15,9 +15,9 @@ import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
 
 public class ShooterFireCommand extends CommandBase {
-  private ShooterSubsystem m_shooter;
-  private VisionSubsystem m_vision;
-  private DriveTrainSubsystem m_driveTrain;
+  private ShooterSubsystem m_shooter = null;
+  private VisionSubsystem m_vision = null;
+  private DriveTrainSubsystem m_driveTrain = null;
 
   /** Creates a new ShooterCommand. */
   public ShooterFireCommand(
@@ -31,6 +31,10 @@ public class ShooterFireCommand extends CommandBase {
     m_vision = visionSubsystem;
   }
 
+  public ShooterFireCommand(ShooterSubsystem shooterSubsystem) {
+    m_shooter = shooterSubsystem;
+  }
+
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {}
@@ -41,8 +45,9 @@ public class ShooterFireCommand extends CommandBase {
 
     double shooterSpeed = 0.0;
 
+
     // Only shoot when there's a valid target in range
-    if (m_vision.findTarget() == true) {
+    if (m_vision != null && m_vision.findTarget() == true) {
       // m_vision.ledToggle();
 
       /**
@@ -50,17 +55,20 @@ public class ShooterFireCommand extends CommandBase {
        */
       turnTowardsTarget();
 
-       /**
-        * TODO
-        * Guess-timate how far from target robot is
-        * 
-        * if (close) 
-        *   set Constants.Shooter.closeShooterSpeed
-        * else if (mid)
-        *   set Constants.Shooter.midShooterSpeed
-        * else if (far)
-        *   set Constants.Shooter.farShooterSpeed
-        */
+      /**
+       * TODO
+       * Guess-timate how far from target robot is
+       * 
+       * if (close) 
+       *   set Constants.Shooter.closeShooterSpeed
+       * else if (mid)
+       *   set Constants.Shooter.midShooterSpeed
+       * else if (far)
+       *   set Constants.Shooter.farShooterSpeed
+       */
+    } else {
+      // Set shooter speed if vision subsystem is not defined.
+      shooterSpeed = Constants.Shooter.closeShooterSpeed;
     }
 
     m_shooter.fire(shooterSpeed);

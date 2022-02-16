@@ -40,6 +40,7 @@ public class ShooterSubsystem extends SubsystemBase {
         boolean status = true;
 
         status = shooter(speed, FIRE);
+        status = feedIn(Constants.Shooter.feederSpeed);
 
         return status;
     }

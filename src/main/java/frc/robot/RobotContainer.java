@@ -7,8 +7,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.commands.CollectorLowerCollectorCommand;
-import frc.robot.commands.CollectorRaiseCollectorCommand;
+import frc.robot.commands.CollectorRaiseLowerCollectorCommand;
 import frc.robot.commands.ShooterFeedInCommand;
 import frc.robot.commands.ShooterFeedOutCommand;
 import frc.robot.commands.ShooterFireCommand;
@@ -35,9 +34,7 @@ public class RobotContainer {
   private VisionSubsystem     visionSubsystem     = new VisionSubsystem();
   
   private ShooterFireCommand fireCommand = new ShooterFireCommand(
-        shooterSubsystem,
-        driveTrainSubsystem,
-        visionSubsystem
+        shooterSubsystem
   );
   private ShooterStopShooterCommand stopShooterCommand = new ShooterStopShooterCommand(shooterSubsystem);
 
@@ -45,9 +42,7 @@ public class RobotContainer {
   private ShooterFeedOutCommand feedOutCommand = new ShooterFeedOutCommand(shooterSubsystem);
   private ShooterStopFeederCommand stopFeederCommand = new ShooterStopFeederCommand(shooterSubsystem);
   
-  private CollectorLowerCollectorCommand lowerCollectorCommand = new CollectorLowerCollectorCommand(collectorSubsystem);
-  private CollectorRaiseCollectorCommand raiseCollectorCommand = new CollectorRaiseCollectorCommand(collectorSubsystem);
-  
+  private CollectorRaiseLowerCollectorCommand raiseLowerCollectorCommand = new CollectorRaiseLowerCollectorCommand(collectorSubsystem);  
 
   // private CollectorSubsystem m_collector = new CollectorSubsystem();
 
@@ -106,6 +101,9 @@ public class RobotContainer {
 
     clearFeederBtn.whenPressed(feedOutCommand);
     clearFeederBtn.whenReleased(stopFeederCommand);
+
+    // Raise or lower the collector depending on which switch is pressed.
+    raiseLowerCollectorBtn.whenPressed(raiseLowerCollectorCommand);
   }
 
   /**

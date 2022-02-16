@@ -8,11 +8,11 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.CollectorSubsystem;
 
-public class CollectorRaiseCollectorCommand extends CommandBase {
+public class CollectorRaiseLowerCollectorCommand extends CommandBase {
   private CollectorSubsystem m_collector;
 
-  /** Creates a new CollectorRaiseCollectorCommand. */
-  public CollectorRaiseCollectorCommand(CollectorSubsystem collectorSubsystem) {
+  /** Creates a new CollectorLowerCollector. */
+  public CollectorRaiseLowerCollectorCommand(CollectorSubsystem collectorSubsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_collector = collectorSubsystem;
   }
@@ -24,7 +24,16 @@ public class CollectorRaiseCollectorCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_collector.raiseCollector(Constants.Collector.raiseLowerSpeed);
+    boolean topSwitchStatus = m_collector.getTopLimitSwitchState();
+    boolean bottomSwitchStatus = m_collector.getBottomLimitSwitchState();
+
+    if ( topSwitchStatus ) {
+      // If button pressed and the top switch is triggered then lower collector
+      m_collector.lowerCollector(Constants.Collector.raiseLowerSpeed);
+    } else if ( bottomSwitchStatus ) {    
+      // If button pressed and the bottom switch is triggered then raise collector
+      m_collector.raiseCollector(Constants.Collector.raiseLowerSpeed);
+    }
   }
 
   // Called once the command ends or is interrupted.
@@ -34,14 +43,17 @@ public class CollectorRaiseCollectorCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    boolean status = m_collector.getTopLimitSwitchState();
+    boolean topSwitchStatus = m_collector.getTopLimitSwitchState();
+    boolean bottomSwitchStatus = m_collector.getBottomLimitSwitchState();
 
-    // Stop motor when limit switch pressed
+    // If top or bottom switch triggered than stop raise/lower motor
+    boolean status = (topSwitchStatus || bottomSwitchStatus);
+
     if (status) {
       m_collector.stopRaiseLower();
     }
 
-    // Finish when touching limit switch.
     return status;
+
   }
 }
