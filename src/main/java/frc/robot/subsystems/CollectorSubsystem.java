@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 import edu.wpi.first.wpilibj.motorcontrol.VictorSP;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -82,7 +83,8 @@ public class CollectorSubsystem extends SubsystemBase {
         /**
          * As long as the top limit switch isn't triggered run the motor.
          */
-        if (toplimitSwitch.get() == false) {
+        if (toplimitSwitch.get() == true) {
+            SmartDashboard.putNumber("Raise", speed);
             status = collectorPosition(speed, RAISE);
         }
 
@@ -103,7 +105,8 @@ public class CollectorSubsystem extends SubsystemBase {
         /**
          * As long as the bottom limit switch isn't triggered run the motor.
          */
-        if (bottomLimitSwitch.get() == false) {
+        if (bottomLimitSwitch.get() == true) {
+            SmartDashboard.putNumber("Lower", speed);
             status = collectorPosition(speed, LOWER);
         }
 
