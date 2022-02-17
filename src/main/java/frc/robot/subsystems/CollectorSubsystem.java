@@ -13,8 +13,9 @@ public class CollectorSubsystem extends SubsystemBase {
     private final static int OUT = -1;
     
     // Used to determine direction.  Does the motor raise or lower the collector
-    private final static int RAISE = 1;
-    private final static int LOWER = -1;
+    public final static int RAISE = 1;
+    public final static int LOWER = -1;
+    public final static int STOP = 0;
 
     // Raise or Lower motor controller
     private MotorController victorSpRaiseLowerMC = new VictorSP(Constants.Collector.raiseLowerPort);
@@ -83,10 +84,8 @@ public class CollectorSubsystem extends SubsystemBase {
         /**
          * As long as the top limit switch isn't triggered run the motor.
          */
-        if (toplimitSwitch.get() == true) {
-            SmartDashboard.putNumber("Raise", speed);
-            status = collectorPosition(speed, RAISE);
-        }
+        SmartDashboard.putNumber("Raise", speed);
+        status = collectorPosition(speed, RAISE);
 
         return status;
     }
@@ -105,10 +104,8 @@ public class CollectorSubsystem extends SubsystemBase {
         /**
          * As long as the bottom limit switch isn't triggered run the motor.
          */
-        if (bottomLimitSwitch.get() == true) {
-            SmartDashboard.putNumber("Lower", speed);
-            status = collectorPosition(speed, LOWER);
-        }
+        SmartDashboard.putNumber("Lower", speed);
+        status = collectorPosition(speed, LOWER);
 
         return status;
     }
