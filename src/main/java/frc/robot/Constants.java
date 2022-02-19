@@ -99,6 +99,7 @@ public final class Constants {
         public final static double movementPerDegree01 = ( ( Robot.robotRadius / ( Robot.wheelRadius / 2 ) ) * encoder01PPR ) /360;
         public final static double movementPerDegree02 = ( ( Robot.robotRadius / ( Robot.wheelRadius / 2 ) ) * encoder02PPR ) /360;
         public final static double movementPerDegree03 = ( ( Robot.robotRadius / ( Robot.wheelRadius / 2 ) ) * encoder03PPR ) /360;
+
     }
 
     public final class Joystick {
