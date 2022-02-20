@@ -38,6 +38,21 @@ public final class Constants {
         public final static int selectedBot = CANNONBOT;
     }
 
+    public final class Climber {
+        /**
+         * PORTS
+         */
+        public final static int liftMotorControllerPort    = 42;
+        public final static int wenchMotorControllerPort01 = 40;
+        public final static int wenchMotorControllerPort02 = 41;
+
+        /**
+         * SPEEDS
+         */
+        public final static double liftSpeed  = 0.5;
+        public final static double climbSpeed = 0.5;
+    }
+
     public final class Collector {
         /**
          * PORTS
@@ -111,15 +126,28 @@ public final class Constants {
         // Controller Only Drive Stations 
         public final static int firstControllerPort  = 4;
         public final static int secondControllerPort = 5;
-
-        /**
-         * BUTTONS
-         */
+        
         public final static int joysticks  = 1;
         public final static int controllers = 2;
 
         public final static int configuration = joysticks;
 
+
+        /**
+         * BUTTONS
+         */
+
+        /*******************
+         * JOYSTICK01 - PILOT
+         */
+        public final static int raiseLiftBtn = 5;
+        public final static int lowerLiftBtn = 3;
+        public final static int climbBtn = 6;
+        public final static int lowerBtn = 4;
+
+        /*******************
+         * JOYSTICK02 - CO-PILOT
+         */
         public final static int fireShooterBtn = 1;
         public final static int feedShooterBtn = 2;
 

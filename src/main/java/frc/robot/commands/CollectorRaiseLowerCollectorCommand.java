@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
@@ -29,7 +30,6 @@ public class CollectorRaiseLowerCollectorCommand extends CommandBase {
     boolean topSwitchStatus    = m_collector.getTopLimitSwitchState();
     boolean bottomSwitchStatus = m_collector.getBottomLimitSwitchState();
 
-    SmartDashboard.putBoolean("Top switch",    !topSwitchStatus);
     SmartDashboard.putBoolean("Bottom switch", !bottomSwitchStatus);
 
     if ( ( topSwitchStatus == false 

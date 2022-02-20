@@ -1,10 +1,5 @@
 {
   "HALProvider": {
-    "Encoders": {
-      "window": {
-        "visible": true
-      }
-    },
     "Other Devices": {
       "AnalogGyro[0]": {
         "header": {
@@ -41,6 +36,7 @@
   "NTProvider": {
     "types": {
       "/FMSInfo": "FMSInfo",
+      "/LiveWindow/ClimberSubsystem": "Subsystem",
       "/LiveWindow/CollectorSubsystem": "Subsystem",
       "/LiveWindow/DriveTrainSubsystem": "Subsystem",
       "/LiveWindow/ExampleSubsystem": "Subsystem",
@@ -55,7 +51,15 @@
       "/LiveWindow/Ungrouped/VictorSP[5]": "Motor Controller",
       "/LiveWindow/Ungrouped/VictorSP[6]": "Motor Controller",
       "/LiveWindow/VisionSubsystem": "Subsystem",
+      "/Shuffleboard/Autonomous/SendableChooser[0]": "String Chooser",
       "/SmartDashboard/Field": "Field2d"
+    },
+    "windows": {
+      "/Shuffleboard/Autonomous/SendableChooser[0]": {
+        "window": {
+          "visible": true
+        }
+      }
     }
   },
   "NetworkTables": {

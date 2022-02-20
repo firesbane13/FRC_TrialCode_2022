@@ -32,16 +32,6 @@ public class DriveTrainSubsystem extends SubsystemBase {
     public final static int RIGHT = 1;
     public final static int LEFT = -1;
 
-    /**********************************************
-     * 4 Wheels.   At this point it could be Omni, Mecanum, or Tank Drive
-     * 
-     * Omniwheels and Mecanum are controlled separately so the controllers
-     * are defined separately.
-     * 
-     * Tank wheels are initially defined separately, but then grouped to a side
-     * of the robot.   THe MotorControllerGroups below group the motor controllers
-     * for each side together.
-     */
     /*
     public MotorController motorController00 = new Spark(Constants.DriveTrain.motorControllerPort00);
     public MotorController motorController01 = new Spark(Constants.DriveTrain.motorControllerPort01);
@@ -49,39 +39,21 @@ public class DriveTrainSubsystem extends SubsystemBase {
     public MotorController motorController03 = new Spark(Constants.DriveTrain.motorControllerPort03);
     */
     
-    public CANSparkMax sparkMax00 = new CANSparkMax(
-        Constants.DriveTrain.canMotorDeviceId01,
-        MotorType.kBrushless
-    );
-    public MotorController motorController00 = sparkMax00;
+    public CANSparkMax sparkMax00;
+    public MotorController motorController00;
 
-    private CANSparkMax sparkMax01 = new CANSparkMax(
-        Constants.DriveTrain.canMotorDeviceId02, 
-        MotorType.kBrushless
-    );
-    public MotorController motorController01 = sparkMax01;
+    private CANSparkMax sparkMax01;
+    public MotorController motorController01;
 
-    private CANSparkMax sparkMax02 = new CANSparkMax(
-        Constants.DriveTrain.canMotorDeviceId03, 
-        MotorType.kBrushless
-    );
-    public MotorController motorController02 = sparkMax02;
+    private CANSparkMax sparkMax02;
+    public MotorController motorController02;
 
-    private CANSparkMax sparkMax03 = new CANSparkMax(
-        Constants.DriveTrain.canMotorDeviceId04, 
-        MotorType.kBrushless
-    );
-    public MotorController motorController03 = sparkMax03;
+    private CANSparkMax sparkMax03;
+    public MotorController motorController03;
 
-    private MotorControllerGroup leftMotors = new MotorControllerGroup(
-        this.motorController00,
-        this.motorController01
-    );
+    private MotorControllerGroup leftMotors;
 
-    private MotorControllerGroup rightMotors = new MotorControllerGroup(
-        this.motorController02,
-        this.motorController03
-    );
+    private MotorControllerGroup rightMotors;
 
     /************************************************
      * Drive Train Encoders
@@ -91,10 +63,10 @@ public class DriveTrainSubsystem extends SubsystemBase {
      * See https://docs.wpilib.org/en/stable/docs/hardware/sensors/encoders-hardware.html
      * for explanation.
      */
-    private RelativeEncoder encoder00 = sparkMax00.getEncoder();
-    private RelativeEncoder encoder01 = sparkMax01.getEncoder();
-    private RelativeEncoder encoder02 = sparkMax02.getEncoder();
-    private RelativeEncoder encoder03 = sparkMax03.getEncoder();
+    private RelativeEncoder encoder00;
+    private RelativeEncoder encoder01;
+    private RelativeEncoder encoder02;
+    private RelativeEncoder encoder03;
 
     /**
      * Simulation Encoders
@@ -109,7 +81,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
     /**
      * Real Drive Train
      */
-    public DifferentialDrive m_drive = new DifferentialDrive(leftMotors, rightMotors);
+    public DifferentialDrive m_drive;
     
     /**
      * Simulation Drive Train
@@ -153,7 +125,87 @@ public class DriveTrainSubsystem extends SubsystemBase {
     /** Creates a new TankDriveSubsystem Object */
     public DriveTrainSubsystem() {
         double wheelCircumference = ((2 * Math.PI) * Constants.Robot.wheelRadius);
-      
+        int selectedBot = Constants.Robot.selectedBot;
+
+        if (selectedBot == Constants.Robot.CANNONBOT) {
+            motorController00 = new Spark(Constants.DriveTrain.motorControllerPort00);
+            motorController01 = new Spark(Constants.DriveTrain.motorControllerPort01);
+            motorController02 = new Spark(Constants.DriveTrain.motorControllerPort02);
+            motorController03 = new Spark(Constants.DriveTrain.motorControllerPort03);
+        } else if (selectedBot == Constants.Robot.MECANUMBOT) {
+            this.sparkMax00 = new CANSparkMax(
+                Constants.DriveTrain.canMotorDeviceId01,
+                MotorType.kBrushless
+            );
+
+            this.sparkMax01 = new CANSparkMax(
+                Constants.DriveTrain.canMotorDeviceId02, 
+                MotorType.kBrushless
+            );
+
+            this.sparkMax02 = new CANSparkMax(
+                Constants.DriveTrain.canMotorDeviceId03, 
+                MotorType.kBrushless
+            );
+
+            this.sparkMax03 = new CANSparkMax(
+                Constants.DriveTrain.canMotorDeviceId04, 
+                MotorType.kBrushless
+            );
+        } else if (selectedBot == Constants.Robot.RAPIDREACT) {
+            this.sparkMax00 = new CANSparkMax(
+                Constants.DriveTrain.canMotorDeviceId05,
+                MotorType.kBrushless
+            );
+
+            this.sparkMax01 = new CANSparkMax(
+                Constants.DriveTrain.canMotorDeviceId06, 
+                MotorType.kBrushless
+            );
+
+            this.sparkMax02 = new CANSparkMax(
+                Constants.DriveTrain.canMotorDeviceId07, 
+                MotorType.kBrushless
+            );
+
+            this.sparkMax03 = new CANSparkMax(
+                Constants.DriveTrain.canMotorDeviceId08, 
+                MotorType.kBrushless
+            );
+        }
+
+        if (Constants.Robot.selectedBot != Constants.Robot.CANNONBOT){
+            this.motorController00 = sparkMax00;
+            this.motorController01 = sparkMax01;
+            this.motorController02 = sparkMax02;
+            this.motorController03 = sparkMax03;
+
+            /************************************************
+             * Drive Train Encoders
+             * 
+             * Encoders need two ports/channels on the DIO portion of the roboRIO.
+             * 
+             * See https://docs.wpilib.org/en/stable/docs/hardware/sensors/encoders-hardware.html
+             * for explanation.
+             */
+            this.encoder00 = sparkMax00.getEncoder();
+            this.encoder01 = sparkMax01.getEncoder();
+            this.encoder02 = sparkMax02.getEncoder();
+            this.encoder03 = sparkMax03.getEncoder();
+        }
+
+        this.leftMotors = new MotorControllerGroup(
+            this.motorController00,
+            this.motorController01
+        );
+
+        this.rightMotors = new MotorControllerGroup(
+            this.motorController02,
+            this.motorController03
+        );
+        
+        m_drive = new DifferentialDrive(leftMotors, rightMotors);
+
         /*
         encoder00.setDistancePerPulse(wheelCircumference / Constants.DriveTrain.encoder00PPR);
         encoder00.reset();
@@ -240,10 +292,6 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
         SmartDashboard.putNumber("leftSpeed", leftSpeed);
         SmartDashboard.putNumber("rightSpeed", rightSpeed);
-        SmartDashboard.putNumber("encoder00 Pos", encoder00.getPosition());
-        SmartDashboard.putNumber("encoder01 Pos", encoder01.getPosition());
-        SmartDashboard.putNumber("encoder02 Pos", encoder02.getPosition());
-        SmartDashboard.putNumber("encoder03 Pos", encoder03.getPosition());
 
         m_drive.tankDrive(leftSpeed, rightSpeed);
 
