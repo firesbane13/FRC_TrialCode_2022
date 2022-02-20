@@ -34,7 +34,8 @@ public class RobotContainer {
   private VisionSubsystem     visionSubsystem     = new VisionSubsystem();
   
   private ShooterFireCommand fireCommand = new ShooterFireCommand(
-        shooterSubsystem
+        shooterSubsystem,
+        visionSubsystem
   );
   private ShooterStopShooterCommand stopShooterCommand = new ShooterStopShooterCommand(shooterSubsystem);
 
@@ -43,8 +44,6 @@ public class RobotContainer {
   private ShooterStopFeederCommand stopFeederCommand = new ShooterStopFeederCommand(shooterSubsystem);
   
   private CollectorRaiseLowerCollectorCommand raiseLowerCollectorCommand = new CollectorRaiseLowerCollectorCommand(collectorSubsystem);  
-
-  // private CollectorSubsystem m_collector = new CollectorSubsystem();
 
   /********************************************
    * Tank Drive Controls

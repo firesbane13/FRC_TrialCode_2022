@@ -234,9 +234,10 @@ public class VisionSubsystem extends SubsystemBase {
         return status;
     }
 
-    private double calculateDistance(double angleFromCenter) {
-        double distance = 0.0;
+    public double calculateDistance() {
+        double distance      = 0.0;
         double adjustedAngle = 0.0;
+        double angleFromCenter = getTargetVertical();
 
         adjustedAngle  = angleFromCenter + Constants.Limelight.angleOfLimelight;
 

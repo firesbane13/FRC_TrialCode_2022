@@ -14,7 +14,7 @@ public class CollectorRaiseLowerCollectorCommand extends CommandBase {
   private int currentDirection = CollectorSubsystem.STOP;
 
   /** Creates a new CollectorLowerCollector. */
-  public CollectorRaiseLowerCollectorCommand(CollectorSubsystem collectorSubsystem) {
+  public CollectorRaiseLowerCollectorCommand( CollectorSubsystem collectorSubsystem ) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_collector = collectorSubsystem;
   }
@@ -26,18 +26,29 @@ public class CollectorRaiseLowerCollectorCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    boolean topSwitchStatus = m_collector.getTopLimitSwitchState();
+    boolean topSwitchStatus    = m_collector.getTopLimitSwitchState();
     boolean bottomSwitchStatus = m_collector.getBottomLimitSwitchState();
 
-    SmartDashboard.putBoolean("Top switch", topSwitchStatus);
-    SmartDashboard.putBoolean("Bottom switch", bottomSwitchStatus);
-    if ( topSwitchStatus == false || currentDirection == CollectorSubsystem.LOWER) {
+    SmartDashboard.putBoolean("Top switch",    !topSwitchStatus);
+    SmartDashboard.putBoolean("Bottom switch", !bottomSwitchStatus);
+
+    if ( ( topSwitchStatus == false 
+            && currentDirection == CollectorSubsystem.STOP 
+          ) || currentDirection == CollectorSubsystem.LOWER
+    ) {
       // If button pressed and the top switch is triggered then lower collector
-      m_collector.lowerCollector(Constants.Collector.raiseLowerSpeed);
+      m_collector.lowerCollector( Constants.Collector.raiseLowerSpeed );
+
+      // Save direction for the command.  As it loops it will continue running that motor.
       currentDirection = CollectorSubsystem.LOWER;
-    } else if ( bottomSwitchStatus == false || currentDirection == CollectorSubsystem.RAISE) {    
+    } else if ( ( bottomSwitchStatus == false 
+                  && currentDirection == CollectorSubsystem.STOP
+                ) || currentDirection == CollectorSubsystem.RAISE
+    ) {    
       // If button pressed and the bottom switch is triggered then raise collector
-      m_collector.raiseCollector(Constants.Collector.raiseLowerSpeed);
+      m_collector.raiseCollector( Constants.Collector.raiseLowerSpeed );
+
+      // Save direction for the command.  As it loops it will continue running that motor.
       currentDirection = CollectorSubsystem.RAISE;
     }
   }
@@ -50,11 +61,12 @@ public class CollectorRaiseLowerCollectorCommand extends CommandBase {
   @Override
   public boolean isFinished() {
     // When the limit switches are tripped they are set to false.
-    boolean topSwitchStatus = m_collector.getTopLimitSwitchState();
+    boolean topSwitchStatus    = m_collector.getTopLimitSwitchState();
     boolean bottomSwitchStatus = m_collector.getBottomLimitSwitchState();
  
     boolean status = false;
 
+    // Check if and which limit switch is tripped.
     if (currentDirection == CollectorSubsystem.RAISE) {
       // Flip limit switch state.   When false return true because limit switch has tripped.
       status = !topSwitchStatus;
@@ -65,12 +77,13 @@ public class CollectorRaiseLowerCollectorCommand extends CommandBase {
       status = true;
     }
 
+    // When the top or bottom limit is triggered, set direction and stop the motor.
     if (status) {
       currentDirection = CollectorSubsystem.STOP;
+
       m_collector.stopRaiseLower();
     }
 
     return status;
-
   }
 }

@@ -4,6 +4,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
 import edu.wpi.first.wpilibj.motorcontrol.VictorSP;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -14,7 +15,7 @@ public class ShooterSubsystem extends SubsystemBase {
     private static final int FEEDIN  = 1;
     private static final int FEEDOUT = -1;
 
-    private TalonFX talonMotorController = new TalonFX(Constants.Shooter.talonMotorControllerId);
+    private TalonFX talonMotorController = new TalonFX(Constants.Shooter.talonMotorControllerPort);
     private VictorSP victorMotorController = new VictorSP(Constants.Shooter.victorMotorControllerPort);
 
     public ShooterSubsystem() {
@@ -123,6 +124,41 @@ public class ShooterSubsystem extends SubsystemBase {
         victorMotorController.set(Constants.stopMotor);
 
         return status;
+    }
+
+
+    /**
+     * powerPerInch()
+     * 
+     * Calculates the power per inch based on collected values
+     * 
+     * @return
+     */
+    public double powerPerInch() {
+        return ( 
+            ( Constants.Shooter.farthestSpeed - Constants.Shooter.closeDistance )
+            / ( Constants.Shooter.farthestDistance - Constants.Shooter.closeDistance )
+        );
+    }
+
+    /**
+     * calculateSpeed()
+     * 
+     * Calculates the speed need to hit the goal.
+     * 
+     * @param targetDistance
+     * @return
+     */
+    public double calculateSpeed(double targetDistance) {
+        double remainingDistance = targetDistance - Constants.Shooter.closeDistance;
+        double ppi = powerPerInch();
+        double speed = (remainingDistance * ppi) * Constants.Shooter.closeSpeed;
+
+        SmartDashboard.putNumber("Remaing Distance", remainingDistance);
+        SmartDashboard.putNumber("PPI", ppi);
+        SmartDashboard.putNumber("Calculated Spd", speed);
+
+        return speed;
     }
 
     /**
