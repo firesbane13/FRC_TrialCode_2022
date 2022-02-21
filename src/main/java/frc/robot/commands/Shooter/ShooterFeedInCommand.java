@@ -2,16 +2,17 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands;
+package frc.robot.commands.Shooter;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.subsystems.ShooterSubsystem;
 
-public class ShooterStopShooterCommand extends CommandBase {
-  public ShooterSubsystem m_shooter;
+public class ShooterFeedInCommand extends CommandBase {
+  private ShooterSubsystem m_shooter;
 
-  /** Creates a new ShooterStopCommand. */
-  public ShooterStopShooterCommand(ShooterSubsystem shooterSubsystem) {
+  /** Creates a new ShooterFeedInCommand. */
+  public ShooterFeedInCommand(ShooterSubsystem shooterSubsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_shooter = shooterSubsystem;
   }
@@ -23,7 +24,7 @@ public class ShooterStopShooterCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_shooter.stopShooter();
+    m_shooter.feedIn(Constants.Shooter.feederSpeed);
   }
 
   // Called once the command ends or is interrupted.
@@ -33,6 +34,6 @@ public class ShooterStopShooterCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return true;
+    return false;
   }
 }
