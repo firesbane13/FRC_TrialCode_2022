@@ -14,6 +14,8 @@ public class ShooterStopFeederCommand extends CommandBase {
   public ShooterStopFeederCommand(ShooterSubsystem shooterSubsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_shooter = shooterSubsystem;
+
+    addRequirements(shooterSubsystem);
   }
 
   // Called when the command is initially scheduled.

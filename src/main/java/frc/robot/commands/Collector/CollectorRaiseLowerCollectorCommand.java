@@ -18,6 +18,8 @@ public class CollectorRaiseLowerCollectorCommand extends CommandBase {
   public CollectorRaiseLowerCollectorCommand( CollectorSubsystem collectorSubsystem ) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_collector = collectorSubsystem;
+
+    addRequirements(collectorSubsystem);
   }
 
   // Called when the command is initially scheduled.

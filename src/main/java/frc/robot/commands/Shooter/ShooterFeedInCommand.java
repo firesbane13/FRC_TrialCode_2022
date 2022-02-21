@@ -15,6 +15,8 @@ public class ShooterFeedInCommand extends CommandBase {
   public ShooterFeedInCommand(ShooterSubsystem shooterSubsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_shooter = shooterSubsystem;
+
+    addRequirements(shooterSubsystem);
   }
 
   // Called when the command is initially scheduled.

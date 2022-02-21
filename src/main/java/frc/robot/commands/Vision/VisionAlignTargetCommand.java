@@ -20,6 +20,9 @@ public class VisionAlignTargetCommand extends CommandBase {
     // Use addRequirements() here to declare subsystem dependencies.
     m_vision = visionSubsystem;
     m_driveTrain = driveTrainSubsystem;
+
+    addRequirements(visionSubsystem);
+    addRequirements(driveTrainSubsystem);
   }
 
   // Called when the command is initially scheduled.

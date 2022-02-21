@@ -14,6 +14,8 @@ public class ClimberStopClimberCommand extends CommandBase {
   public ClimberStopClimberCommand(ClimberSubsystem climberSubsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_climber = climberSubsystem;
+
+    addRequirements(climberSubsystem);
   }
 
   // Called when the command is initially scheduled.

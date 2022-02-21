@@ -20,6 +20,9 @@ public class ShooterFireCommand extends CommandBase {
     // Use addRequirements() here to declare subsystem dependencies.
     m_shooter = shooterSubsystem;
     m_vision  = visionSubsystem;
+
+    addRequirements(shooterSubsystem);
+    addRequirements(visionSubsystem);
   }
 
   // Called when the command is initially scheduled.

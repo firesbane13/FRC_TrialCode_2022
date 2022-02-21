@@ -15,6 +15,8 @@ public class ClimberLowerLifterCommand extends CommandBase {
   public ClimberLowerLifterCommand(ClimberSubsystem climberSubsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_climber = climberSubsystem;
+
+    addRequirements(climberSubsystem);
   }
 
   // Called when the command is initially scheduled.
