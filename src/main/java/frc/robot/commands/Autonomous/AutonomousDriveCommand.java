@@ -10,12 +10,16 @@ import frc.robot.subsystems.DriveTrainSubsystem;
 
 public class AutonomousDriveCommand extends CommandBase {
   private DriveTrainSubsystem m_driveTrain;
+  private double leftSpeed = Constants.stopMotor;
+  private double rightSpeed = Constants.stopMotor;
 
   /** Creates a new AutonomousDriveCommand. */
-  public AutonomousDriveCommand(DriveTrainSubsystem driveTrainSubsystem) {
+  public AutonomousDriveCommand(DriveTrainSubsystem driveTrainSubsystem, double leftSpeed, double rightSpeed) {
     // Use addRequirements() here to declare subsystem dependencies.
 
     m_driveTrain = driveTrainSubsystem;
+    this.leftSpeed = leftSpeed;
+    this.rightSpeed = rightSpeed;
 
     addRequirements(driveTrainSubsystem);
   }
@@ -23,13 +27,13 @@ public class AutonomousDriveCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_driveTrain.tankDrive(0.5, 0.5);
+    m_driveTrain.tankDrive(this.leftSpeed, this.rightSpeed);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_driveTrain.tankDrive(0.5, 0.5);
+    m_driveTrain.tankDrive(this.leftSpeed, this.rightSpeed);
   }
 
   // Called once the command ends or is interrupted.
@@ -41,6 +45,14 @@ public class AutonomousDriveCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    boolean status = false;
+
+    if (this.leftSpeed == Constants.stopMotor 
+      && this.rightSpeed == Constants.stopMotor
+    ) {
+      status = true;
+    }
+    
+    return status;
   }
 }

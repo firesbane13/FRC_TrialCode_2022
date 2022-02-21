@@ -30,7 +30,9 @@ public class AutonomousCommands01 extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new AutonomousDriveCommand(driveTrainSubsystem).withTimeout(5),
+      new AutonomousDriveCommand(driveTrainSubsystem, 0.5, 0.5).withTimeout(5),
+      new AutonomousDriveCommand(driveTrainSubsystem, 0.30, -0.64).withTimeout(5),
+      new AutonomousDriveCommand(driveTrainSubsystem, 0.0, 0.0),
       new VisionAlignTargetCommand(visionSubsystem, driveTrainSubsystem).withTimeout(5),
       new ShooterFireCommand(shooterSubsystem, visionSubsystem).withTimeout(5),
       new ShooterFeedInCommand(shooterSubsystem).withTimeout(5),
