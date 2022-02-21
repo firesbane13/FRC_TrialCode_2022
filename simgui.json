@@ -55,6 +55,11 @@
       "/SmartDashboard/Field": "Field2d"
     },
     "windows": {
+      "/LiveWindow/DriveTrainSubsystem": {
+        "window": {
+          "visible": true
+        }
+      },
       "/Shuffleboard/Autonomous/SendableChooser[0]": {
         "window": {
           "visible": true

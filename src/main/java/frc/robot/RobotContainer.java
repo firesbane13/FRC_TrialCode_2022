@@ -11,6 +11,8 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import frc.robot.commands.Autonomous.AutonomousCommands01;
+import frc.robot.commands.Autonomous.AutonomousDriveCommand;
 import frc.robot.commands.Climber.ClimberClimbCommand;
 import frc.robot.commands.Climber.ClimberLowerCommand;
 import frc.robot.commands.Climber.ClimberLowerLifterCommand;
@@ -66,8 +68,14 @@ public class RobotContainer {
   private ClimberLowerLifterCommand lowerLifterCommand = new ClimberLowerLifterCommand(climberSubsystem);
   private ClimberStopLifterCommand  stopLifterCommand  = new ClimberStopLifterCommand(climberSubsystem);
 
+  
+  private AutonomousCommands01 autonomousCommand01 = new AutonomousCommands01(
+    driveTrainSubsystem,
+    shooterSubsystem,
+    visionSubsystem,
+    collectorSubsystem
+  );
   /*
-  private AutonomousCommand01 autonomousCommand01 = new AutonomousCommand01(driveTrainSubsystem, shooterSubsystem, visionSubsystem, collectorSubsystem);
   private AutonomousCommand02 autonomousCommand02 = new AutonomousCommand02(driveTrainSubsystem, shooterSubsystem, visionSubsystem, collectorSubsystem);
   private AutonomousCommand03 autonomousCommand03 = new AutonomousCommand03(driveTrainSubsystem, shooterSubsystem, visionSubsystem, collectorSubsystem);
   */
@@ -117,13 +125,13 @@ public class RobotContainer {
         driveTrainSubsystem)
       );
 
-    /*
     m_chooser.setDefaultOption("Autonomous 01", autonomousCommand01);
+    /*    
     m_chooser.addOption("Autonomous 02", autonomousCommand02);
     m_chooser.addOption("Autonomous 03", autonomousCommand03);
+    */
 
     Shuffleboard.getTab("Autonomous").add(m_chooser);
-    */
   }
   
   /**

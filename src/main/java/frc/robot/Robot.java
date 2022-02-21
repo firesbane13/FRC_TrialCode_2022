@@ -26,7 +26,7 @@ public class Robot extends TimedRobot {
 
   public static RobotContainer m_robotContainer;
 
-  public String trajectoryJSON = "pathweaver/pathweaver.json";
+  public String trajectoryJSON = "pathweaver/output/Closest Blue Ball.wpilib.json";
   public Trajectory trajectory = new Trajectory();
 
   /**
