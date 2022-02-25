@@ -125,7 +125,7 @@ public class RobotContainer {
         driveTrainSubsystem)
       );
 
-    m_chooser.setDefaultOption("Autonomous 01", autonomousCommand01);
+    m_chooser.setDefaultOption("01 - Left Side", autonomousCommand01);
     /*    
     m_chooser.addOption("Autonomous 02", autonomousCommand02);
     m_chooser.addOption("Autonomous 03", autonomousCommand03);

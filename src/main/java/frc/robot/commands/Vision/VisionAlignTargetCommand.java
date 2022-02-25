@@ -4,6 +4,7 @@
 
 package frc.robot.commands.Vision;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
@@ -47,21 +48,26 @@ public class VisionAlignTargetCommand extends CommandBase {
 
   public void turnTowardsTarget() {
     final double MINSPEED = 0.35;
+    final double Kp       = -0.02;
 
     double targetX         = 0.0;
     double targetTurnSpeed = 0.0;
+    double headingError    = 0.0;
     
     // Angle of the target on the horizon.
     targetX = m_vision.getTargetHorizontal();
-
-    // Convert radians to a 1 scale
-    targetTurnSpeed = targetX / 30;
-
-    /**
-     * Turn speed + (difference from max * minimum speed)
-     */
-    targetTurnSpeed = targetTurnSpeed + ((1 - targetTurnSpeed) * MINSPEED);
+    headingError = -targetX;
     
+    if (targetX > 1.0) {
+      targetTurnSpeed = ((Kp * headingError) - MINSPEED);
+    } else if (targetX < 1.0) {
+      targetTurnSpeed = ((Kp * headingError) + MINSPEED);
+    }
+    
+    SmartDashboard.putNumber("Align: Target X", targetX);
+    SmartDashboard.putNumber("Align: Heading Err", headingError);
+    SmartDashboard.putNumber("Align: Target Turn Spd", targetTurnSpeed);
+
     m_driveTrain.tankDrive(targetTurnSpeed, -targetTurnSpeed);
   }
 }
