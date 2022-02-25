@@ -2,57 +2,42 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-
+import frc.robot.Robot;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
+import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim;
+
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkMaxRelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-import edu.wpi.first.hal.SimDevice;
 import edu.wpi.first.math.VecBuilder;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.AnalogGyro;
-import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
-import edu.wpi.first.wpilibj.simulation.AnalogGyroSim;
-import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim;
-import edu.wpi.first.wpilibj.simulation.EncoderSim;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DriveTrainSubsystem extends SubsystemBase {
     public final static int RIGHT = 1;
     public final static int LEFT = -1;
-
-    /*
-    public MotorController motorController00 = new Spark(Constants.DriveTrain.motorControllerPort00);
-    public MotorController motorController01 = new Spark(Constants.DriveTrain.motorControllerPort01);
-    public MotorController motorController02 = new Spark(Constants.DriveTrain.motorControllerPort02);
-    public MotorController motorController03 = new Spark(Constants.DriveTrain.motorControllerPort03);
-    */
     
-    public CANSparkMax sparkMax00;
     public MotorController motorController00;
-
-    private CANSparkMax sparkMax01;
     public MotorController motorController01;
-
-    private CANSparkMax sparkMax02;
     public MotorController motorController02;
-
-    private CANSparkMax sparkMax03;
     public MotorController motorController03;
 
-    private MotorControllerGroup leftMotors;
+    private CANSparkMax sparkMax00;
+    private CANSparkMax sparkMax01;
+    private CANSparkMax sparkMax02;
+    private CANSparkMax sparkMax03;
 
+    private MotorControllerGroup leftMotors;
     private MotorControllerGroup rightMotors;
 
     /************************************************
@@ -63,53 +48,36 @@ public class DriveTrainSubsystem extends SubsystemBase {
      * See https://docs.wpilib.org/en/stable/docs/hardware/sensors/encoders-hardware.html
      * for explanation.
      */
-    private RelativeEncoder encoder00;
-    private RelativeEncoder encoder01;
-    private RelativeEncoder encoder02;
-    private RelativeEncoder encoder03;
+    private RelativeEncoder encoder00 = null;
+    private RelativeEncoder encoder01 = null;
+    private RelativeEncoder encoder02 = null;
+    private RelativeEncoder encoder03 = null;
 
-    /**
-     * Simulation Encoders
-     */
-    /*
-    private EncoderSim encoderSim00 = new EncoderSim(this.encoder00);
-    private EncoderSim encoderSim01 = new EncoderSim(this.encoder01);
-    private EncoderSim encoderSim02 = new EncoderSim(this.encoder02);
-    private EncoderSim encoderSim03 = new EncoderSim(this.encoder03);
-    */
+    // Encoder's resolution.
+    private double encoder00PPR;
+    private double encoder01PPR;
+    private double encoder02PPR;
+    private double encoder03PPR;
+
+    // Each encoders' movement speed.
+    private double encoder00MovementInInches;
+    private double encoder01MovementInInches;
+    private double encoder02MovementInInches;
+    private double encoder03MovementInInches;
+
+    // Each encoders' degree speed.
+    private double encoder00MovementPerDeg;
+    private double encoder01MovementPerDeg;
+    private double encoder02MovementPerDeg;
+    private double encoder03MovementPerDeg;
 
     /**
      * Real Drive Train
      */
     public DifferentialDrive m_drive;
-    
-    /**
-     * Simulation Drive Train
-     * 
-     * Create the simulation model of our drivetrain.
-     */
-    /*
-    public DifferentialDrivetrainSim m_driveSim = new DifferentialDrivetrainSim(
-        DCMotor.getNEO(Constants.Simulation.driveTrainNeosPerSide),    // 2 NEO motors on each side of the drivetrain.
-        Constants.Robot.driveGearRatio,       // 7.29:1 gearing reduction.
-        Constants.Robot.movementOfInertia,    // MOI of 7.5 kg m^2 (from CAD model).
-        Constants.Robot.massOfRobot,          // The mass of the robot is 60 kg.
-        Units.inchesToMeters(Constants.Robot.wheelRadius),    // The robot uses 4" radius wheels.
-        Units.inchesToMeters(Constants.Robot.trackWidth),     // The track width is 0.7112 meters.
-
-        // The standard deviations for measurement noise:
-        // x and y:          0.001 m
-        // heading:          0.001 rad
-        // l and r velocity: 0.1   m/s
-        // l and r pzzosition: 0.005 m
-        VecBuilder.fill(0.001, 0.001, 0.001, 0.1, 0.1, 0.005, 0.005));
-    */
 
     private AnalogGyro m_gyro = new AnalogGyro(Constants.Sensors.gyro00Port00);
-    /*
-    // Simulation gyro.
-    private AnalogGyroSim m_gyroSim = new AnalogGyroSim(m_gyro);
-    */
+   
     /**
      * Creating my odometry object. Here,
      * our starting pose is 5 meters along the long end of the field and in the
@@ -119,12 +87,31 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
     private final DifferentialDriveKinematics m_kinematics = new DifferentialDriveKinematics(Constants.Robot.trackWidth);
 
+    /*****************************************
+     * SIMULATION
+     */
+    // Create the simulation model of our drivetrain.
+    DifferentialDrivetrainSim m_driveSim = new DifferentialDrivetrainSim(
+    DCMotor.getNEO(2),       // 2 NEO motors on each side of the drivetrain.
+    7.29,                    // 7.29:1 gearing reduction.
+    7.5,                     // MOI of 7.5 kg m^2 (from CAD model).
+    60.0,                    // The mass of the robot is 60 kg.
+    Units.inchesToMeters(3), // The robot uses 3" radius wheels.
+    0.7112,                  // The track width is 0.7112 meters.
+
+    // The standard deviations for measurement noise:
+    // x and y:          0.001 m
+    // heading:          0.001 rad
+    // l and r velocity: 0.1   m/s
+    // l and r position: 0.005 m
+    VecBuilder.fill(0.001, 0.001, 0.001, 0.1, 0.1, 0.005, 0.005));
+
     // 2D version of the field
     public Field2d m_field = new Field2d();
 
     /** Creates a new TankDriveSubsystem Object */
     public DriveTrainSubsystem() {
-        double wheelCircumference = ((2 * Math.PI) * Constants.Robot.wheelRadius);
+        
         int selectedBot = Constants.Robot.selectedBot;
 
         if (selectedBot == Constants.Robot.CANNONBOT) {
@@ -188,10 +175,25 @@ public class DriveTrainSubsystem extends SubsystemBase {
              * See https://docs.wpilib.org/en/stable/docs/hardware/sensors/encoders-hardware.html
              * for explanation.
              */
-            this.encoder00 = sparkMax00.getEncoder();
-            this.encoder01 = sparkMax01.getEncoder();
-            this.encoder02 = sparkMax02.getEncoder();
-            this.encoder03 = sparkMax03.getEncoder();
+            this.encoder00 = sparkMax00.getEncoder(SparkMaxRelativeEncoder.Type.kQuadrature, 4096);
+            this.encoder01 = sparkMax01.getEncoder(SparkMaxRelativeEncoder.Type.kQuadrature, 4096);
+            this.encoder02 = sparkMax02.getEncoder(SparkMaxRelativeEncoder.Type.kQuadrature, 4096);
+            this.encoder03 = sparkMax03.getEncoder(SparkMaxRelativeEncoder.Type.kQuadrature, 4096);
+
+            this.encoder00PPR = this.encoder00.getCountsPerRevolution();
+            this.encoder01PPR = this.encoder01.getCountsPerRevolution();
+            this.encoder02PPR = this.encoder02.getCountsPerRevolution();
+            this.encoder03PPR = this.encoder03.getCountsPerRevolution();
+
+            this.encoder00MovementInInches = this.encoder00PPR / ((2 * Constants.Robot.wheelRadius) * Math.PI);
+            this.encoder01MovementInInches = this.encoder01PPR / ((2 * Constants.Robot.wheelRadius) * Math.PI);
+            this.encoder02MovementInInches = this.encoder02PPR / ((2 * Constants.Robot.wheelRadius) * Math.PI);
+            this.encoder03MovementInInches = this.encoder03PPR / ((2 * Constants.Robot.wheelRadius) * Math.PI);
+
+            this.encoder00MovementPerDeg = ((Constants.Robot.robotRadius / Constants.Robot.wheelRadius) * this.encoder00PPR) / 360;
+            this.encoder01MovementPerDeg = ((Constants.Robot.robotRadius / Constants.Robot.wheelRadius) * this.encoder01PPR) / 360;
+            this.encoder02MovementPerDeg = ((Constants.Robot.robotRadius / Constants.Robot.wheelRadius) * this.encoder02PPR) / 360;
+            this.encoder03MovementPerDeg = ((Constants.Robot.robotRadius / Constants.Robot.wheelRadius) * this.encoder03PPR) / 360;
         }
 
         this.leftMotors = new MotorControllerGroup(
@@ -206,28 +208,10 @@ public class DriveTrainSubsystem extends SubsystemBase {
         
         m_drive = new DifferentialDrive(leftMotors, rightMotors);
 
-        /*
-        encoder00.setDistancePerPulse(wheelCircumference / Constants.DriveTrain.encoder00PPR);
-        encoder00.reset();
-
-        encoder01.setDistancePerPulse(wheelCircumference / Constants.DriveTrain.encoder01PPR);
-        encoder01.reset();
-
-        encoder02.setDistancePerPulse(wheelCircumference / Constants.DriveTrain.encoder02PPR);
-        encoder02.reset();
-
-        encoder03.setDistancePerPulse(wheelCircumference / Constants.DriveTrain.encoder03PPR);
-        encoder03.reset();
-        */
-
         // Set rightMotors reversed
         rightMotors.setInverted(true);        
 
-
         m_gyro.reset();
-        /*
-        m_gyroSim.setAngle(-m_driveSim.getHeading().getDegrees());
-        */
 
         m_odometry = new DifferentialDriveOdometry(m_gyro.getRotation2d());
 
@@ -236,46 +220,10 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-
-        /**
-         * Get my gyro angle. We are negating the value because gyros return positive
-         * values as the robot turns clockwise. This is not standard convention that is
-         * used by the WPILib classes.
-         */
-        var gyroAngle = Rotation2d.fromDegrees(-m_gyro.getAngle());
-
-        /*
-        // Update the pose
-        m_pose = m_odometry.update(gyroAngle, m_leftEncoder.getDistance(), m_rightEncoder.getDistance());
-        */
     }
 
     @Override
     public void simulationPeriodic() {
-        // Set the inputs to the system. Note that we need to convert
-        // the [-1, 1] PWM signal to voltage by multiplying it by the
-        // robot controller voltage.
-        /*
-        m_driveSim.setInputs(leftMotors.get() * RobotController.getInputVoltage(),
-                            rightMotors.get() * RobotController.getInputVoltage());
-        */
-
-        // Advance the model by 20 ms. Note that if you are running this
-        // subsystem in a separate thread or have changed the nominal timestep
-        // of TimedRobot, this value needs to match it.
-        // m_driveSim.update(0.02);
-
-        // Update all of our sensors.
-        /*
-        encoderSim00.setDistance(m_driveSim.getLeftPositionMeters());
-        encoderSim00.setRate(m_driveSim.getLeftVelocityMetersPerSecond());
-        encoderSim01.setDistance(m_driveSim.getLeftPositionMeters());
-        encoderSim01.setRate(m_driveSim.getLeftVelocityMetersPerSecond());
-        encoderSim02.setDistance(m_driveSim.getLeftPositionMeters());
-        encoderSim02.setRate(m_driveSim.getLeftVelocityMetersPerSecond());
-        encoderSim03.setDistance(m_driveSim.getLeftPositionMeters());
-        encoderSim03.setRate(m_driveSim.getLeftVelocityMetersPerSecond());
-        */
     }
 
     /**
@@ -326,6 +274,12 @@ public class DriveTrainSubsystem extends SubsystemBase {
      */
     public boolean moveForwardOrBack(double distance, double speed) {
         boolean status = false;
+        double  encoder00Position = this.encoder00.getPosition();
+        double  encoder01Position = this.encoder01.getPosition();
+        double  encoder02Position = this.encoder02.getPosition();
+        double  encoder03Position = this.encoder03.getPosition();
+
+        
 
         return status;
     }

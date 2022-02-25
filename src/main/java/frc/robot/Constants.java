@@ -20,8 +20,10 @@ public final class Constants {
         /*************************************
          * General Robot Constants
          */
-        public final static double wheelRadius       = 8;       // The robot uses 8" radius wheels.
-        public final static double robotRadius       = 48;      // Robot radius in inches.
+        public final static double wheelRadius        = 8.0;       // The robot uses 8" radius wheels.
+        public final static double wheelCircumference = ((2 * Math.PI) * Constants.Robot.wheelRadius);
+
+        public final static double robotRadius        = 48.0;      // Robot radius in inches.
 
         public final static double driveGearRatio    = 7.29;    // 7.29:1 gearing reduction.
         public final static double movementOfInertia = 7.5;     // MOI of 7.5 kg m^2 (from CAD model).

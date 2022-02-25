@@ -241,7 +241,7 @@ public class VisionSubsystem extends SubsystemBase {
 
         adjustedAngle  = angleFromCenter + Constants.Limelight.angleOfLimelight;
 
-        distance = Constants.Limelight.calculatedHeight / Math.tan(adjustedAngle);
+        distance = Constants.Limelight.calculatedHeight / Math.tan(Math.toRadians(adjustedAngle));
 
         return distance;
     }
