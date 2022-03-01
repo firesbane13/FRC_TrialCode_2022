@@ -14,24 +14,28 @@ public class ShooterClearCommand extends CommandBase {
   /** Creates a new ShooterClearCommand. */
   public ShooterClearCommand(ShooterSubsystem shooterSubsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
-    m_shooter = shooterSubsystem;
+    this.m_shooter = shooterSubsystem;
 
     addRequirements(shooterSubsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    this.m_shooter.clear(Constants.Shooter.clearShooterSpeed);
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_shooter.clear(Constants.Shooter.clearShooterSpeed);
+    // Runs every 20ms
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    // Runs when robot is interrupted or isFinished == true
+  }
 
   // Returns true when the command should end.
   @Override

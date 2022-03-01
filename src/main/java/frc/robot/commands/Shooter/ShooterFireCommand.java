@@ -18,8 +18,8 @@ public class ShooterFireCommand extends CommandBase {
     VisionSubsystem  visionSubsystem
   ) {
     // Use addRequirements() here to declare subsystem dependencies.
-    m_shooter = shooterSubsystem;
-    m_vision  = visionSubsystem;
+    this.m_shooter = shooterSubsystem;
+    this.m_vision  = visionSubsystem;
 
     addRequirements(shooterSubsystem);
     addRequirements(visionSubsystem);
@@ -27,7 +27,9 @@ public class ShooterFireCommand extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    // Runs when the command is triggered.
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
@@ -35,12 +37,14 @@ public class ShooterFireCommand extends CommandBase {
     double targetDistance = this.m_vision.calculateDistance();
     double shooterSpeed = this.m_shooter.calculateSpeed(targetDistance);
 
-    m_shooter.fire(shooterSpeed);
+    this.m_shooter.fire(shooterSpeed);
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    // Runs when interrupted or when isFinished == true
+  }
 
   // Returns true when the command should end.
   @Override

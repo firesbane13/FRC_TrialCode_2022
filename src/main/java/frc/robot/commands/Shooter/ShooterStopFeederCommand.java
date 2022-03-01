@@ -13,7 +13,7 @@ public class ShooterStopFeederCommand extends CommandBase {
   /** Creates a new ShooterStopFeederCommand. */
   public ShooterStopFeederCommand(ShooterSubsystem shooterSubsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
-    m_shooter = shooterSubsystem;
+    this.m_shooter = shooterSubsystem;
 
     addRequirements(shooterSubsystem);
   }
@@ -21,17 +21,20 @@ public class ShooterStopFeederCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_shooter.stopFeeder();
+    this.m_shooter.stopFeeder();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    // Runs every 20ms
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    // Runs when interrupted or when isFinished == true
+  }
 
   // Returns true when the command should end.
   @Override

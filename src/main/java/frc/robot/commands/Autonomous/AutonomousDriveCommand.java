@@ -17,7 +17,7 @@ public class AutonomousDriveCommand extends CommandBase {
   public AutonomousDriveCommand(DriveTrainSubsystem driveTrainSubsystem, double leftSpeed, double rightSpeed) {
     // Use addRequirements() here to declare subsystem dependencies.
 
-    m_driveTrain = driveTrainSubsystem;
+    this.m_driveTrain = driveTrainSubsystem;
     this.leftSpeed = leftSpeed;
     this.rightSpeed = rightSpeed;
 
@@ -27,19 +27,19 @@ public class AutonomousDriveCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_driveTrain.tankDrive(this.leftSpeed, this.rightSpeed);
+    this.m_driveTrain.tankDrive(this.leftSpeed, this.rightSpeed);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_driveTrain.tankDrive(this.leftSpeed, this.rightSpeed);
+    // Called every 20ms
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_driveTrain.tankDrive(Constants.stopMotor, Constants.stopMotor);
+    this.m_driveTrain.tankDrive(Constants.stopMotor, Constants.stopMotor);
   }
 
   // Returns true when the command should end.
@@ -47,6 +47,7 @@ public class AutonomousDriveCommand extends CommandBase {
   public boolean isFinished() {
     boolean status = false;
 
+    // End drive command if told to stop.
     if (this.leftSpeed == Constants.stopMotor 
       && this.rightSpeed == Constants.stopMotor
     ) {

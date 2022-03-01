@@ -20,12 +20,14 @@ public class ClimberStopClimberCommand extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    this.m_climber.stopClimber();
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
+    // Runs every 20ms
   }
 
   // Called once the command ends or is interrupted.

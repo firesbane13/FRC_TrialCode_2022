@@ -6,6 +6,7 @@ package frc.robot.commands.Vision;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
 
@@ -19,8 +20,8 @@ public class VisionAlignTargetCommand extends CommandBase {
     DriveTrainSubsystem driveTrainSubsystem
   ) {
     // Use addRequirements() here to declare subsystem dependencies.
-    m_vision = visionSubsystem;
-    m_driveTrain = driveTrainSubsystem;
+    this.m_vision = visionSubsystem;
+    this.m_driveTrain = driveTrainSubsystem;
 
     addRequirements(visionSubsystem);
     addRequirements(driveTrainSubsystem);
@@ -28,7 +29,9 @@ public class VisionAlignTargetCommand extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    // Runs when command is triggered.
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
@@ -38,7 +41,9 @@ public class VisionAlignTargetCommand extends CommandBase {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    this.m_driveTrain.tankDrive(Constants.stopMotor, Constants.stopMotor);
+  }
 
   // Returns true when the command should end.
   @Override
@@ -68,6 +73,6 @@ public class VisionAlignTargetCommand extends CommandBase {
     SmartDashboard.putNumber("Align: Heading Err", headingError);
     SmartDashboard.putNumber("Align: Target Turn Spd", targetTurnSpeed);
 
-    m_driveTrain.tankDrive(targetTurnSpeed, -targetTurnSpeed);
+    this.m_driveTrain.tankDrive(targetTurnSpeed, -targetTurnSpeed);
   }
 }
