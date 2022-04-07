@@ -88,9 +88,15 @@ public class RobotContainer {
   public Joystick joystick01 = new Joystick(Constants.Joystick.tankRightPort);
   public Joystick joystick02 = new Joystick(Constants.Joystick.secondDriverPort);
 
+  public XboxController controller00 = new XboxController(Constants.Joystick.firstControllerPort);
+  public XboxController controller01 = new XboxController(Constants.Joystick.secondControllerPort);
+
+  /*
   public Joystick controller00 = new Joystick(Constants.Joystick.firstControllerPort);
   public Joystick controller01 = new Joystick(Constants.Joystick.secondControllerPort);
+  */
 
+  /*
   public JoystickButton fireBtn        = new JoystickButton(joystick02, Constants.Joystick.fireShooterBtn);
   public JoystickButton feedShooterBtn = new JoystickButton(joystick02, Constants.Joystick.feedShooterBtn);
 
@@ -107,6 +113,7 @@ public class RobotContainer {
   public JoystickButton lowerBtn     = new JoystickButton(joystick01, Constants.Joystick.lowerBtn);
   public JoystickButton raiseLiftBtn = new JoystickButton(joystick01, Constants.Joystick.raiseLiftBtn);
   public JoystickButton lowerLiftBtn = new JoystickButton(joystick01, Constants.Joystick.lowerLiftBtn);
+  */ 
 
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 
@@ -119,12 +126,23 @@ public class RobotContainer {
       new RunCommand(
         () -> 
           driveTrainSubsystem.tankDrive(
-            joystick00.getY(),
-            joystick01.getY()
+            controller00.getLeftY(),
+            controller01.getLeftY()
           ),
         driveTrainSubsystem)
       );
 
+      /*
+      driveTrainSubsystem.setDefaultCommand(
+        new RunCommand(
+          () -> 
+            driveTrainSubsystem.tankDrive(
+              controller00.getRawAxis(1),
+              controller01.getRawAxis(4)
+            ),
+          driveTrainSubsystem)
+        );
+      */
     m_chooser.setDefaultOption("01 - Left Side", autonomousCommand01);
     /*    
     m_chooser.addOption("Autonomous 02", autonomousCommand02);
@@ -141,7 +159,7 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-        
+    /*    
     fireBtn.whileHeld(fireCommand);
     fireBtn.whenReleased(stopShooterCommand);
 
@@ -165,6 +183,7 @@ public class RobotContainer {
 
     lowerLiftBtn.whenHeld(lowerLifterCommand);
     lowerLiftBtn.whenReleased(stopLifterCommand);
+    */
   }
 
   /**

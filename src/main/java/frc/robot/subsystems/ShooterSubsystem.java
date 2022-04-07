@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj.motorcontrol.VictorSP;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -15,8 +16,8 @@ public class ShooterSubsystem extends SubsystemBase {
     private static final int FEEDIN  = 1;
     private static final int FEEDOUT = -1;
 
-    private TalonFX talonMotorController = new TalonFX(Constants.Shooter.talonMotorControllerPort);
-    private VictorSP victorMotorController = new VictorSP(Constants.Shooter.victorMotorControllerPort);
+    private TalonFX talonMotorController   = new TalonFX(Constants.Shooter.talonMotorControllerPort);
+    private VictorSPX victorMotorController = new VictorSPX(Constants.Shooter.victorMotorControllerPort);
 
     public ShooterSubsystem() {
     }
@@ -121,7 +122,7 @@ public class ShooterSubsystem extends SubsystemBase {
     public boolean stopFeeder() {
         boolean status = true;
 
-        victorMotorController.set(Constants.stopMotor);
+        victorMotorController.set(ControlMode.PercentOutput, Constants.stopMotor);
 
         return status;
     }
@@ -193,7 +194,7 @@ public class ShooterSubsystem extends SubsystemBase {
     private boolean feed(double speed, int direction) {
         boolean status = true;
 
-        victorMotorController.set(speed * direction);
+        victorMotorController.set(ControlMode.PercentOutput, speed * direction);
 
         return status;
     }
