@@ -96,7 +96,7 @@ public class RobotContainer {
   public Joystick controller01 = new Joystick(Constants.Joystick.secondControllerPort);
   */
 
-  /*
+  /*P
   public JoystickButton fireBtn        = new JoystickButton(joystick02, Constants.Joystick.fireShooterBtn);
   public JoystickButton feedShooterBtn = new JoystickButton(joystick02, Constants.Joystick.feedShooterBtn);
 
@@ -127,7 +127,7 @@ public class RobotContainer {
         () -> 
           driveTrainSubsystem.tankDrive(
             controller00.getLeftY(),
-            controller01.getLeftY()
+            controller00.getRightY()
           ),
         driveTrainSubsystem)
       );
@@ -138,7 +138,7 @@ public class RobotContainer {
           () -> 
             driveTrainSubsystem.tankDrive(
               controller00.getRawAxis(1),
-              controller01.getRawAxis(4)
+              controller01.getRawAxis(3)
             ),
           driveTrainSubsystem)
         );
