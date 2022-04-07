@@ -132,7 +132,7 @@ public final class Constants {
         public final static int joysticks  = 1;
         public final static int controllers = 2;
 
-        public final static int configuration = joysticks;
+        public final static int configuration = controllers;
 
 
         /**
