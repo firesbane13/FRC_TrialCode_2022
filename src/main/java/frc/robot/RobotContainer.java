@@ -88,13 +88,14 @@ public class RobotContainer {
   public Joystick joystick01 = new Joystick(Constants.Joystick.tankRightPort);
   public Joystick joystick02 = new Joystick(Constants.Joystick.secondDriverPort);
 
+  /*
   public XboxController controller00 = new XboxController(Constants.Joystick.firstControllerPort);
   public XboxController controller01 = new XboxController(Constants.Joystick.secondControllerPort);
-
-  /*
+  */
+  
   public Joystick controller00 = new Joystick(Constants.Joystick.firstControllerPort);
   public Joystick controller01 = new Joystick(Constants.Joystick.secondControllerPort);
-  */
+  
 
   /*P
   public JoystickButton fireBtn        = new JoystickButton(joystick02, Constants.Joystick.fireShooterBtn);
@@ -122,6 +123,7 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
 
+    /*
     driveTrainSubsystem.setDefaultCommand(
       new RunCommand(
         () -> 
@@ -131,18 +133,18 @@ public class RobotContainer {
           ),
         driveTrainSubsystem)
       );
+      */
 
-      /*
       driveTrainSubsystem.setDefaultCommand(
         new RunCommand(
           () -> 
             driveTrainSubsystem.tankDrive(
-              controller00.getRawAxis(1),
-              controller01.getRawAxis(3)
+              controller00.getRawAxis(3),
+              controller00.getRawAxis(1)
             ),
           driveTrainSubsystem)
         );
-      */
+      
     m_chooser.setDefaultOption("01 - Left Side", autonomousCommand01);
     /*    
     m_chooser.addOption("Autonomous 02", autonomousCommand02);
